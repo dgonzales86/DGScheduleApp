@@ -26,12 +26,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="userIDLbl" text="User ID:" />
+            <Label fx:id="userNameLbl" text="User Name:" />
             <Label fx:id="userPasswordLbl" text="Password:" GridPane.rowIndex="1" />
-            <TextField fx:id="userIDTxtbox" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
+            <TextField fx:id="userNameTextBox" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
             <TextField fx:id="userPasswordTextBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="logInBtn" layoutX="367.0" layoutY="289.0" mnemonicParsing="false" text="Log In" />
+      <Button fx:id="logInBtn" layoutX="367.0" layoutY="289.0" mnemonicParsing="false" onAction="#onActionLogIn" text="Log In" />
+      <Label fx:id="locationIdLbl" layoutX="88.0" layoutY="293.0" />
    </children>
 </AnchorPane>
