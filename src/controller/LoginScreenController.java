@@ -19,10 +19,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable
 {
+
+
     Stage stage;
     Parent scene;
 
@@ -47,14 +50,21 @@ public class LoginScreenController implements Initializable
 
     public void loadSchedule() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("src/view/loginScreen.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        try {
 
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
+            Parent root = loader.load();
+            DisplayScheduleController displayScheduleController = loader.getController();
+            //ModProductController.sendProduct(productsTableView.getSelectionModel().getSelectedItem());
+           // stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+            e.getMessage();
+        }
     }
-
 
     @FXML
     void onActionLogIn(ActionEvent event) throws SQLException {
@@ -66,8 +76,6 @@ public class LoginScreenController implements Initializable
 
             System.out.println(userName + userPassword);
 
-
-
             // Raw SQL
             String sql = "select * from users where User_Name='"+ userName +"' and Password='"+ userPassword +"'";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
@@ -78,10 +86,19 @@ public class LoginScreenController implements Initializable
             }
             if(rowCount == 1){
 
-            JOptionPane.showMessageDialog(null,"Welcome!");
-            loadSchedule();
+            //JOptionPane.showMessageDialog(null,"Welcome!");
+                try {
 
-
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
+                    Parent root = loader.load();
+                    stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                    Parent scene = loader.getRoot();
+                    stage.setScene(new Scene(scene));
+                    stage.show();
+                }catch (IllegalStateException e){
+                    e.printStackTrace();
+                    e.getMessage();
+                }
 
             }else if (rowCount == 0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -94,18 +111,17 @@ public class LoginScreenController implements Initializable
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-
-    }
-
-    public static void verifyLogin(int userID, String userPassword){
-        
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        Locale locale = Locale.getDefault();
+
         locationIdLbl.setText(String.valueOf(ZoneId.systemDefault()));
 
 
     }
+
+
 }

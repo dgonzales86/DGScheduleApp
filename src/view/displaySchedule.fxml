@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
+<BorderPane xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <center>
       <TableView fx:id="appointmentTableView" prefHeight="548.0" prefWidth="1280.0" style="-fx-background-color: #bbe0e6;">
         <columns>

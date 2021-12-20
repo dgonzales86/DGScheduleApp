@@ -9,14 +9,18 @@ import javafx.stage.Stage;
 import utils.DBQuery;
 
 import java.sql.SQLException;
+import java.util.Locale;
 
 import static utils.DBConnection.*;
 
 
 public class Main  extends Application {
+
+
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        //Locale.setDefault(new Locale("fr"));      // Sets default to french to test log-in form
         Parent root = FXMLLoader.load(getClass().getResource("/view/loginScreen.fxml"));
         primaryStage.setTitle("Scheduling Application");
         primaryStage.setScene(new Scene(root, 500, 350));
@@ -24,7 +28,7 @@ public class Main  extends Application {
     }
     public static void main(String[] args) throws SQLException {
 
-       //Locale.setDefault(new Locale("fr"));      // Sets default to french to test log-in form
+
 
         dbConnect();
 
