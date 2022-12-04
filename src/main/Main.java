@@ -6,15 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import utils.DBQuery;
 
 import java.sql.SQLException;
-import java.util.Locale;
 
-import static utils.DBConnection.*;
+import static DBConnection.DBConnection.*;
 
 
-public class Main  extends Application {
+public class Main extends Application {
 
 
     @Override
@@ -33,16 +31,6 @@ public class Main  extends Application {
         dbConnect();
 
 
-        DBQuery.setStatement(connection);  // Creates Statement Object
-
-
-
-     //   DBQuery.setStatement(connection);
-
-
-
-
-
 
 
 
@@ -55,14 +43,7 @@ public class Main  extends Application {
         launch(args);
         closeConnection();
 
-
-
     }
 
-    public static void lambdaTest(){
-
-        System.out.println("lambdaWorks");
-
-    }
 
 }

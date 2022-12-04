@@ -12,12 +12,12 @@ import javafx.scene.control.TableView;
 import model.Appointments;
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class DisplayScheduleController implements Initializable {
 
     private final ObservableList<Appointments> currentAppointments = FXCollections.observableArrayList();
-
 
     @FXML
     private TableColumn<Appointments, ?> appointmentContactCol;

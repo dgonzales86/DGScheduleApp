@@ -1,6 +1,8 @@
-package utils;
+package DBConnection;
 
 import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 
@@ -9,13 +11,13 @@ import java.sql.*;
  */
 public class DBConnection {
 
-    public static final String databaseName = "client_schedule";
-    public static final String db_URL = "jdbc:mysql://localhost:3306/"+databaseName;
-    public static final String userName = "test";
-    public static final String userPassword = "test";
+    private static final String databaseName = "client_schedule";
+    private static final String db_URL = "jdbc:mysql://localhost:3306/"+databaseName;
+    private static final String userName = "test";
+    private static final String userPassword = "test";
     public static Connection connection;
 
-    // Start Connection
+
     public static void dbConnect(){
     try{
 

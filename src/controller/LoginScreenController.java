@@ -11,20 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import utils.DBConnection;
-import utils.DBQuery;
+import DBConnection.DBConnection;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.ZoneId;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable
 {
-
 
     Stage stage;
     Parent scene;
@@ -55,8 +51,6 @@ public class LoginScreenController implements Initializable
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
             Parent root = loader.load();
             DisplayScheduleController displayScheduleController = loader.getController();
-            //ModProductController.sendProduct(productsTableView.getSelectionModel().getSelectedItem());
-           // stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
             stage.show();
@@ -116,7 +110,7 @@ public class LoginScreenController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Locale locale = Locale.getDefault();
+
 
         locationIdLbl.setText(String.valueOf(ZoneId.systemDefault()));
 

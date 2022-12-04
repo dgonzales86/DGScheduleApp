@@ -1,9 +1,5 @@
-package utils;
+package DBAccess;
 
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DBQuery {
 
@@ -41,18 +37,4 @@ public class DBQuery {
     public static final String COLUMN_APPOINTMENT_TYPE = "Type";
     public static final String COLUMN_APPOINTMENT_START = "Start";
     public static final String COLUMN_APPOINTMENT_END = "End";
-
-    private static Statement statement; // Statement reference
-
-    // Create Statement Object
-    public static void setStatement(Connection conn) throws SQLException {
-        statement = conn.createStatement();
-    }
-
-    // Return Statement Object
-    public static Statement getStatement()
-    {
-        return statement;
-    }
-
 }

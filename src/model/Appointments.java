@@ -4,8 +4,9 @@ package model;
 
 import java.time.LocalDateTime;
 
+
 /**
- * Appointments class
+ * Appointments Class
  */
 public class Appointments{
 
