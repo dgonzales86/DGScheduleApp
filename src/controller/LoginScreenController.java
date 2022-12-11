@@ -47,6 +47,8 @@ public class LoginScreenController implements Initializable
     @FXML
     private TextField userPasswordTextBox;
 
+    private ResourceBundle rb = ResourceBundle.getBundle("ResourceBundle/LoginScreen");
+
 
     public void loadSchedule() throws IOException {
 
@@ -100,8 +102,9 @@ public class LoginScreenController implements Initializable
 
             }else if (rowCount == 0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Invalid Login Credentials");
-                alert.setContentText("You have entered an invalid username and/or password. Try again!");
+                alert.setTitle(rb.getString("InvalidLoginTitle"));
+                alert.setContentText(rb.getString("InvalidLoginMessage"));
+                alert.setResizable(true);
                 alert.showAndWait();
             }
 
@@ -111,14 +114,24 @@ public class LoginScreenController implements Initializable
         }
     }
 
+    public void setRB(){
+
+
+        if(Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
+            userNameLbl.setText(rb.getString("userNameLbl"));
+            userPasswordLbl.setText(rb.getString("userPasswordLbl"));
+            logInBtn.setText(rb.getString("logInBtn"));
+            titleLbl.setText(rb.getString("titleLbl"));
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        rb = ResourceBundle.getBundle("src/LoginScreen",Locale.getDefault());
+        setRB();
 
-        if(Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
-            System.out.println(rb.getString("userNameLbl") + " " + rb.getString("userPasswordLbl"));
+
 
 
 

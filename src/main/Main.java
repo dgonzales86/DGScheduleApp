@@ -30,7 +30,7 @@ public class Main extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("fr"));      // Sets default to french to test log-in form
+        Locale.setDefault(new Locale("fr","FR"));      // Sets default to french to test log-in form
 
 
 
@@ -38,8 +38,6 @@ public class Main extends Application {
 
         /** inserts user into database */
        // int rowsAffected = UserQuery.insert(3,"Nflict2","Nflict3");
-
-
 
 
 
