@@ -1,4 +1,4 @@
-package DBAccess;
+package DBConnection;
 
 
 public class DBQuery {

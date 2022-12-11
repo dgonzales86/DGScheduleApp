@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
+<AnchorPane prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <children>
-      <Label layoutX="88.0" layoutY="31.0" prefHeight="55.0" prefWidth="325.0" text="Schedule Application Login">
+      <Label fx:id="titleLbl" layoutX="88.0" layoutY="31.0" prefHeight="55.0" prefWidth="325.0">
          <font>
-            <Font size="27.0" />
+            <Font size="24.0" />
          </font>
       </Label>
       <GridPane layoutX="110.0" layoutY="127.0" prefHeight="97.0" prefWidth="309.0">
@@ -26,13 +26,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="userNameLbl" text="User Name:" />
-            <Label fx:id="userPasswordLbl" text="Password:" GridPane.rowIndex="1" />
+            <Label fx:id="userNameLbl" />
+            <Label fx:id="userPasswordLbl" GridPane.rowIndex="1" />
             <TextField fx:id="userNameTextBox" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
             <TextField fx:id="userPasswordTextBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="logInBtn" layoutX="367.0" layoutY="289.0" mnemonicParsing="false" onAction="#onActionLogIn" text="Log In" />
+      <Button fx:id="logInBtn" layoutX="367.0" layoutY="289.0" mnemonicParsing="false" onAction="#onActionLogIn" />
       <Label fx:id="locationIdLbl" layoutX="88.0" layoutY="293.0" />
    </children>
 </AnchorPane>

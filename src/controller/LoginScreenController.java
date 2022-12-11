@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable
@@ -24,6 +25,9 @@ public class LoginScreenController implements Initializable
 
     Stage stage;
     Parent scene;
+
+    @FXML
+    private Label titleLbl;
 
     @FXML
     private Label locationIdLbl;
@@ -107,8 +111,15 @@ public class LoginScreenController implements Initializable
         }
     }
 
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle rb) {
+
+        rb = ResourceBundle.getBundle("src/LoginScreen",Locale.getDefault());
+
+        if(Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
+            System.out.println(rb.getString("userNameLbl") + " " + rb.getString("userPasswordLbl"));
+
 
 
 

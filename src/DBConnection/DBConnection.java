@@ -11,8 +11,11 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
+    public static final String protocol = "jdbc";
+    public static final String vendor = ":mysql:";
+    public static final String location = "//localhost/";
     private static final String databaseName = "client_schedule";
-    private static final String db_URL = "jdbc:mysql://localhost:3306/"+databaseName;
+    private static final String db_URL = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; //LOCAL
     private static final String userName = "test";
     private static final String userPassword = "test";
     public static Connection connection;
