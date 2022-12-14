@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import DBConnection.DBConnection;
 
@@ -104,6 +101,7 @@ public class LoginScreenController implements Initializable
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(rb.getString("InvalidLoginTitle"));
                 alert.setContentText(rb.getString("InvalidLoginMessage"));
+                alert.getButtonTypes().set(0, ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
             }
@@ -113,7 +111,8 @@ public class LoginScreenController implements Initializable
             System.out.println(e.getMessage());
         }
     }
-
+    // See about changing following function into a lambda...
+    // Localizes login screen to either English of French.
     public void setRB(){
 
 

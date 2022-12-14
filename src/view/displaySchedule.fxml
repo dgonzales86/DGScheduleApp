@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
+<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <center>
       <TableView fx:id="appointmentTableView" prefHeight="548.0" prefWidth="1280.0" style="-fx-background-color: #bbe0e6;">
         <columns>
@@ -39,14 +39,14 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button">
+            <Button mnemonicParsing="false" text="Appointments" />
+            <Button mnemonicParsing="false" text="Customers" />
+            <Button mnemonicParsing="false" text="View by Month">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="View By Week" />
             <Button mnemonicParsing="false" text="Button" />
             <Button mnemonicParsing="false" text="Button" />
             <Button mnemonicParsing="false" text="Button" />
