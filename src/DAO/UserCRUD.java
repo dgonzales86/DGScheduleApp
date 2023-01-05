@@ -1,12 +1,9 @@
-package DBConnection;
-
-import model.User;
-import model.UserIDCounter;
+package DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserQuery {
+public class UserCRUD {
     // TABLE_USERS = "users"
     // COLUMN_USER_ID = "User_ID"
     // COLUMN_USER_NAME = "User_Name"

@@ -1,4 +1,4 @@
-package DBConnection;
+package DAO;
 
 
 public class DBQuery {

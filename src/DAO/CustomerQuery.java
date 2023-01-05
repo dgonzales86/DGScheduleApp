@@ -1,6 +1,7 @@
-package DBConnection;
+package DAO;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerQuery {
@@ -51,6 +52,27 @@ public class CustomerQuery {
             System.out.println("Delete Sucessful!");
         }else System.out.println("Delete Failed!");
         return rowsAffected;
+    }
+
+    public static void select() throws SQLException {
+        String sql = "SELECT * FROM Customers";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int customerID = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+            String customerAddress = rs.getString("Address");
+            String customerPostalCode = rs.getString("Postal_Code");
+            int customerDivisionID = rs.getInt("Division_ID");
+            System.out.print(customerID + " | ");
+            System.out.print(customerName + " | ");
+            System.out.print(customerAddress + " | ");
+            System.out.print(customerPostalCode + " | ");
+            System.out.print(customerDivisionID + "\n");
+
+
+
+        }
     }
 
 

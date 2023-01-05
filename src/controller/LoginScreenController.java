@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import DBConnection.DBConnection;
+import DAO.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
@@ -129,11 +129,6 @@ public class LoginScreenController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
 
         setRB();
-
-
-
-
-
 
         locationIdLbl.setText(String.valueOf(ZoneId.systemDefault()));
 

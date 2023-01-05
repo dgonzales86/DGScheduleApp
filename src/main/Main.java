@@ -1,20 +1,20 @@
 package main;
 
 
-import DBConnection.UserQuery;
+import DAO.AppointmentsQuery;
+import DAO.CustomerQuery;
+import DAO.UserCRUD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.UserIDCounter;
 
 
 import java.sql.SQLException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import static DBConnection.DBConnection.*;
+import static DAO.DBConnection.*;
 
 
 
@@ -31,7 +31,9 @@ public class Main extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) throws SQLException {
-       //Locale.setDefault(new Locale("fr","FR"));      // Sets default to french to test log-in form
+       Locale.setDefault(new Locale("fr","FR"));      // Sets default to french to test log-in form
+
+
 
 
         // Lambda Practice with GeneralInterface
@@ -42,10 +44,14 @@ public class Main extends Application {
 
         dbConnect();
 
+        AppointmentsQuery.insertAppointment("Break Time!", "Going to get some coffee!", "break room", "Coffee Break", );
+
+        CustomerQuery.select();
+
         /** inserts user into database */
      //  int rowsAffected = UserQuery.insertUser("nflict","Nflict5");
 
-        UserQuery.selectUser("test",1); //does nothing
+        UserCRUD.selectUser("test",1); //does nothing
         /** deletes user from database */
         //int rowsAffected = UserQuery.deleteUser("newUsr1",5);
 
