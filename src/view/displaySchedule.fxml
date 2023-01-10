@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <children>
       <TableView fx:id="appointmentTableView" layoutX="222.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="949.0" prefWidth="1698.0" style="-fx-background-color: #bbe0e6;" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="222.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
@@ -28,27 +28,17 @@
       </TableView>
       <VBox layoutY="24.0" prefHeight="1054.0" prefWidth="209.0">
          <children>
-            <RadioButton fx:id="viewApptByMonth" mnemonicParsing="false" text="View Appointments by Month" />
-            <RadioButton fx:id="viewApptByWeek" mnemonicParsing="false" text="View Appoints by Week">
+            <RadioButton fx:id="viewAllAppts" mnemonicParsing="false" onAction="#onActionViewAllAppts" text="View All Appointments" />
+            <RadioButton fx:id="viewApptByMonth" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" text="View Appointments by Month">
                <padding>
                   <Insets top="20.0" />
                </padding>
             </RadioButton>
-            <Button fx:id="addModAppts" mnemonicParsing="false" text="Appointments">
-               <VBox.margin>
-                  <Insets top="40.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="exitApp" mnemonicParsing="false" text="Exit application">
-               <VBox.margin>
-                  <Insets top="40.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="addModCustomer" mnemonicParsing="false" text="Customers">
-               <VBox.margin>
-                  <Insets top="40.0" />
-               </VBox.margin>
-            </Button>
+            <RadioButton fx:id="viewApptsByWeek" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" text="View Appoints by Week">
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </RadioButton>
             <Text fx:id="selectScheduleDateText" strokeType="OUTSIDE" strokeWidth="0.0" text="Select date to view schedule">
                <VBox.margin>
                   <Insets top="20.0" />
@@ -59,6 +49,21 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </DatePicker>
+            <Button fx:id="addModAppts" mnemonicParsing="false" onAction="#onActionAddModAppts" text="Appointments">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="addModCustomer" mnemonicParsing="false" onAction="#onActionAddModCustomer" text="Customers">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="logOut" mnemonicParsing="false" onAction="#onActionLogOut" text="Log Out">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Button>
          </children>
          <padding>
             <Insets left="20.0" />

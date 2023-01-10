@@ -44,7 +44,7 @@ public class LoginScreenController implements Initializable
     @FXML
     private TextField userPasswordTextBox;
 
-    private ResourceBundle rb = ResourceBundle.getBundle("ResourceBundle/LoginScreen");
+    private ResourceBundle rb = ResourceBundle.getBundle("resourceBundle/LoginScreen");
 
 
     public void loadSchedule() throws IOException {

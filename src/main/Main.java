@@ -2,8 +2,7 @@ package main;
 
 
 import DAO.AppointmentsQuery;
-import DAO.CustomerQuery;
-import DAO.UserCRUD;
+import DAO.UserQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,14 +43,16 @@ public class Main extends Application {
 
         dbConnect();
 
-        AppointmentsQuery.insertAppointment("Break Time!", "Going to get some coffee!", "break room", "Coffee Break", );
+        util.TimeConversion.print();
 
-        CustomerQuery.select();
+       //AppointmentsQuery.insertAppointment("Break Time!", "time for a break", "Break Room", "15 minute", LocalDateTime.now(), LocalDateTime.now(),1,1,1);
+       AppointmentsQuery.select();
+        //CustomersQuery.select();
 
         /** inserts user into database */
      //  int rowsAffected = UserQuery.insertUser("nflict","Nflict5");
 
-        UserCRUD.selectUser("test",1); //does nothing
+        UserQuery.selectUser("test",1); //does nothing
         /** deletes user from database */
         //int rowsAffected = UserQuery.deleteUser("newUsr1",5);
 

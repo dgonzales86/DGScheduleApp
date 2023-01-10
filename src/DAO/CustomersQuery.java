@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomerQuery {
+public class CustomersQuery {
 
     // TABLE_CUSTOMERS = "Customers";
     // COLUMN_CUSTOMER_ID = "Customer_ID";
@@ -37,8 +37,8 @@ public class CustomerQuery {
         ps.setString(4,Division_ID);
         int rowsAffected = ps.executeUpdate();
         if(rowsAffected > 0){
-            System.out.println("Insert Sucessful!");
-        }else System.out.println("Insert Failed!");
+            System.out.println("Update Successful!");
+        }else System.out.println("Update Failed!");
         return rowsAffected;
     }
 
@@ -49,7 +49,7 @@ public class CustomerQuery {
         ps.setInt(2,User_ID);
         int rowsAffected = ps.executeUpdate();
         if(rowsAffected > 0){
-            System.out.println("Delete Sucessful!");
+            System.out.println("Delete Successful!");
         }else System.out.println("Delete Failed!");
         return rowsAffected;
     }

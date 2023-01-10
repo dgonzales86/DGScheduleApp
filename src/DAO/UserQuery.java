@@ -3,7 +3,7 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserCRUD {
+public class UserQuery {
     // TABLE_USERS = "users"
     // COLUMN_USER_ID = "User_ID"
     // COLUMN_USER_NAME = "User_Name"
@@ -40,7 +40,7 @@ public class UserCRUD {
         ps.setInt(2,User_ID);
         int rowsAffected = ps.executeUpdate();
         if(rowsAffected > 0){
-            System.out.println("Update Sucessful!");
+            System.out.println("Update Successful!");
         }else System.out.println("Update Failed!");
         return rowsAffected;
     }
@@ -51,7 +51,7 @@ public class UserCRUD {
         ps.setInt(2,User_ID);
         int rowsAffected = ps.executeUpdate();
         if(rowsAffected > 0){
-            System.out.println("Delete Sucessful!");
+            System.out.println("Delete Successful!");
         }else System.out.println("Delete Failed!");
         return rowsAffected;
     }
