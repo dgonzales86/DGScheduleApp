@@ -3,83 +3,70 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Appointments;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static DAO.AppointmentsQuery.addAppointments;
+import static DAO.AppointmentsQuery.populateAppointments;
 import static DAO.AppointmentsQuery.getAllAppointments;
+
+
 
 
 public class DisplayScheduleController implements Initializable {
 
+    Stage stage;
+    @FXML
+    private TableColumn<?, ?> appointmentContactCol;
 
     @FXML
-    private Button addModAppts;
+    private TableColumn<?, ?> appointmentCustomerCol;
 
     @FXML
-    private Button addModCustomer;
+    private TableColumn<?, ?> appointmentDescriptionCol;
 
     @FXML
-    private TableColumn<Appointments, Integer> appointmentContactCol;
+    private TableColumn<?, ?> appointmentEndCol;
 
     @FXML
-    private TableColumn<Appointments, Integer> appointmentCustomerCol;
+    private TableColumn<?, ?> appointmentIDCol;
 
     @FXML
-    private TableColumn<Appointments, String> appointmentDescriptionCol;
+    private TableColumn<?, ?> appointmentLocationCol;
 
     @FXML
-    private TableColumn<Appointments, LocalDateTime> appointmentEndCol;
-
-    @FXML
-    private TableColumn<Appointments, Integer> appointmentIDCol;
-
-    @FXML
-    private TableColumn<Appointments, String> appointmentLocationCol;
-
-    @FXML
-    private TableColumn<Appointments, LocalDateTime> appointmentStartCol;
+    private TableColumn<?, ?> appointmentStartCol;
 
     @FXML
     private TableView<Appointments> appointmentTableView;
 
     @FXML
-    private TableColumn<Appointments, String> appointmentTitleCol;
+    private TableColumn<?, ?> appointmentTitleCol;
 
     @FXML
-    private TableColumn<Appointments, String> appointmentTypeCol;
+    private TableColumn<?, ?> appointmentTypeCol;
 
     @FXML
-    private TableColumn<Appointments, Integer> appointmentUserCol;
+    private TableColumn<?, ?> appointmentUserCol;
 
     @FXML
-    private Button logOut;
+    private Button appointmentsBtn;
 
     @FXML
-    private Text reportOneTxt;
+    private Button customersBtn;
 
     @FXML
-    private Text reportThreeTxt;
-
-    @FXML
-    private Text reportTwoTxt;
-
-    @FXML
-    private DatePicker selectDatePicker;
-
-    @FXML
-    private Text selectScheduleDateText;
-
-    @FXML
-    private RadioButton viewAllAppts;
+    private Button exitBtn;
 
     @FXML
     private RadioButton viewApptByMonth;
@@ -88,22 +75,24 @@ public class DisplayScheduleController implements Initializable {
     private RadioButton viewApptsByWeek;
 
     @FXML
-    void onActionAddModAppts(ActionEvent event) {
+    void onActionAppointments(ActionEvent event) {
 
     }
 
     @FXML
-    void onActionAddModCustomer(ActionEvent event) {
+    void onActionCustomers(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/customers.fxml"));
+        Parent root = loader.load();
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
 
     }
 
     @FXML
-    void onActionLogOut(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionViewAllAppts(ActionEvent event) {
+    void onActionExit(ActionEvent event) {
 
     }
 
@@ -116,13 +105,14 @@ public class DisplayScheduleController implements Initializable {
     void onActionViewApptsByWeek(ActionEvent event) {
 
     }
-
+    public void onActionViewReports(ActionEvent actionEvent) {
+    }
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            addAppointments();
+            populateAppointments();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -139,5 +129,7 @@ public class DisplayScheduleController implements Initializable {
         appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
 
     }
+
+
 }
 

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static DAO.DBConnection.*;
@@ -30,7 +31,7 @@ public class Main extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) throws SQLException {
-       Locale.setDefault(new Locale("fr","FR"));      // Sets default to french to test log-in form
+    //   Locale.setDefault(new Locale("fr","FR"));      // Sets default to french to test log-in form
 
 
 
@@ -45,7 +46,8 @@ public class Main extends Application {
 
         util.TimeConversion.print();
 
-       //AppointmentsQuery.insertAppointment("Break Time!", "time for a break", "Break Room", "15 minute", LocalDateTime.now(), LocalDateTime.now(),1,1,1);
+//       AppointmentsQuery.insertAppointment("Break Time!", "time for a break", "Break Room", "15 minute",
+//                                                LocalDateTime.now(), LocalDateTime.now(),1,1,1);
        AppointmentsQuery.select();
         //CustomersQuery.select();
 

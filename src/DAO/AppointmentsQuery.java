@@ -29,7 +29,7 @@ public class AppointmentsQuery {
 
     private static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
-    public static ObservableList<Appointments> addAppointments() throws SQLException {
+    public static ObservableList<Appointments> populateAppointments() throws SQLException {
 
             String sql = "SELECT * FROM appointments";
 
@@ -41,12 +41,13 @@ public class AppointmentsQuery {
                     String appointmentDesc = rs.getString("Description");
                     String appointmentLocation = rs.getString("Location");
                     String appointmentType = rs.getString("Type");
-                    LocalDateTime appointmentStart = (LocalDateTime) rs.getObject("Start");
-                    LocalDateTime appointmentEnd = (LocalDateTime) rs.getObject("End");
+                    LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                    LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                     int customerID = rs.getInt("Customer_ID");
                     int userID = rs.getInt("User_ID");
                     int contactID = rs.getInt("Contact_ID");
-                    allAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,appointmentEnd,customerID,userID,contactID));
+                    allAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,
+                                            appointmentEnd,customerID,userID,contactID));
 
 
     }
@@ -59,14 +60,14 @@ public class AppointmentsQuery {
 
     public static int insertAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID,
                                         int User_ID, int Contact_ID) throws SQLException {
-        String sql = "INSERT INTO appointments () VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO appointments (Title,Description,Location,Type,Start,End,Customer_ID,User_ID,Contact_ID) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1,Title);
         ps.setString(2,Description);
         ps.setString(3,Location);
         ps.setString(4,Type);
-        ps.setObject(5, Start);
-        ps.setObject(6, End);
+        ps.setTimestamp(5, Timestamp.valueOf(Start));
+        ps.setTimestamp(6, Timestamp.valueOf(End));
         ps.setInt(7,Customer_ID);
         ps.setInt(8,User_ID);
         ps.setInt(9,Contact_ID);
@@ -115,8 +116,8 @@ public class AppointmentsQuery {
             String appointmentDesc = rs.getString("Description");
             String appointmentLocation = rs.getString("Location");
             String appointmentType = rs.getString("Type");
-            LocalDateTime appointmentStart = (LocalDateTime) rs.getObject("Start");
-            LocalDateTime appointmentEnd = (LocalDateTime) rs.getObject("End");
+            LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
             int customerID = rs.getInt("Customer_ID");
             int userID = rs.getInt("User_ID");
             int contactID = rs.getInt("Contact_ID");

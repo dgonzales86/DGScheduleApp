@@ -47,22 +47,6 @@ public class LoginScreenController implements Initializable
     private ResourceBundle rb = ResourceBundle.getBundle("resourceBundle/LoginScreen");
 
 
-    public void loadSchedule() throws IOException {
-
-        try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
-            Parent root = loader.load();
-            DisplayScheduleController displayScheduleController = loader.getController();
-            Parent scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-            e.getMessage();
-        }
-    }
-
     @FXML
     void onActionLogIn(ActionEvent event) throws SQLException {
 
