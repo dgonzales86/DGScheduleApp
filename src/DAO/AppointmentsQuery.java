@@ -105,6 +105,17 @@ public class AppointmentsQuery {
         return rowsAffected;
     }
 
+    public static int deleteCustomerAppointments(int Customer_ID) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1, Customer_ID);
+        int rowsAffected = ps.executeUpdate();
+        if(rowsAffected > 0){
+            System.out.println("Delete Successful!");
+        }else System.out.println("Delete Failed!");
+        return rowsAffected;
+    }
+
 
     public static void select() throws SQLException {
         String sql = "SELECT * FROM appointments";

@@ -1,6 +1,7 @@
 
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,9 +61,6 @@ public class DisplayScheduleController implements Initializable {
     private TableColumn<?, ?> appointmentUserCol;
 
     @FXML
-    private Button appointmentsBtn;
-
-    @FXML
     private Button customersBtn;
 
     @FXML
@@ -73,11 +71,6 @@ public class DisplayScheduleController implements Initializable {
 
     @FXML
     private RadioButton viewApptsByWeek;
-
-    @FXML
-    void onActionAppointments(ActionEvent event) {
-
-    }
 
     @FXML
     void onActionCustomers(ActionEvent event) throws IOException {
@@ -112,7 +105,8 @@ public class DisplayScheduleController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            populateAppointments();
+            populateAppointments().removeAll(populateAppointments());
+            FXCollections.copy(populateAppointments(),getAllAppointments());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

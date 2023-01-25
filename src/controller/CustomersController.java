@@ -3,11 +3,16 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Customers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -31,6 +36,7 @@ public class CustomersController implements Initializable {
     public TableColumn cusPostalCodeCol;
     public TableColumn cusPhoneCol;
     public TableColumn cusDivIdCol;
+    Stage stage;
 
     public void onActionModifyCus(ActionEvent actionEvent) throws SQLException {
 
@@ -74,16 +80,27 @@ public class CustomersController implements Initializable {
         int cusID = Integer.parseInt(cusIDTxtField.getText());
         String cusName = cusNameTxtField.getText();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you would like delete this customer? Changes cannot be undone!",ButtonType.YES,ButtonType.NO);
-        alert.setResizable(true);
-        Optional<ButtonType> result = alert.showAndWait();
+        Alert deleteCustomerWarning = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you would like delete this customer?\nAll associated appointments will be removed\nand changes cannot be undone!",ButtonType.YES,ButtonType.NO);
+        deleteCustomerWarning.setResizable(true);
+        Optional<ButtonType> result = deleteCustomerWarning.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.YES) {
+           Alert deleteConfirmation = new Alert(Alert.AlertType.INFORMATION,"Customer: " + cusName + " has been removed!");
+           deleteConfirmation.showAndWait();
+           DAO.AppointmentsQuery.deleteCustomerAppointments(cusID);
            deleteCustomer(cusName, cusID);
         }
         refreshCustomerTable();
 
     }
-    public void onActionNavigateBack(ActionEvent actionEvent) {
+    public void onActionNavigateBack(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
+        Parent root = loader.load();
+        stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+
     }
 
     public void refreshCustomerTable(){

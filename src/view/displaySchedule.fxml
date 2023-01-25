@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <children>
-      <TableView fx:id="appointmentTableView" layoutX="175.0" layoutY="115.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="742.0" prefWidth="1569.0" AnchorPane.bottomAnchor="223.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="115.0">
+      <TableView fx:id="appointmentTableView" layoutX="175.0" layoutY="115.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="1569.0" AnchorPane.bottomAnchor="595.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="115.0">
          <columns>
             <TableColumn fx:id="appointmentIDCol" maxWidth="1.7976931348623157E308" prefWidth="150.0" text="Appointment ID" />
             <TableColumn fx:id="appointmentTitleCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Title" />
@@ -32,18 +32,13 @@
             <Insets left="20.0" />
          </padding>
       </VBox>
-      <HBox fillHeight="false" layoutX="664.0" layoutY="885.0" prefHeight="30.0" prefWidth="591.0" AnchorPane.bottomAnchor="165.0" AnchorPane.rightAnchor="664.6666666666665">
+      <HBox fillHeight="false" layoutX="736.0" layoutY="510.0" prefHeight="30.0" prefWidth="437.0" AnchorPane.bottomAnchor="540.0" AnchorPane.rightAnchor="747.0">
          <children>
             <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>
             </Button>
-         <Button fx:id="appointmentsBtn" mnemonicParsing="false" onAction="#onActionAppointments" prefHeight="25.0" prefWidth="113.0" text="Appointments">
-               <HBox.margin>
-                  <Insets left="50.0" />
-               </HBox.margin>
-         </Button>
          <Button fx:id="customersBtn" mnemonicParsing="false" onAction="#onActionCustomers" text="Customers">
                <HBox.margin>
                   <Insets left="50.0" />
@@ -54,12 +49,12 @@
                   <Insets />
                </opaqueInsets>
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="50.0" right="50.0" />
                </HBox.margin>
          </Button>
          </children>
       </HBox>
-      <VBox layoutX="1280.0" layoutY="856.0" prefHeight="88.0" prefWidth="196.0" AnchorPane.bottomAnchor="136.0" AnchorPane.rightAnchor="444.0">
+      <VBox layoutX="1161.0" layoutY="496.0" prefHeight="88.0" prefWidth="196.0" AnchorPane.bottomAnchor="496.0" AnchorPane.rightAnchor="563.0">
          <children>
          <RadioButton fx:id="viewApptByMonth" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" prefHeight="19.0" prefWidth="181.0" text="View Appointments by Month">
             <padding>
