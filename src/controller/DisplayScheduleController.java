@@ -16,6 +16,7 @@ import model.Appointments;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static DAO.AppointmentsQuery.populateAppointments;
@@ -86,6 +87,15 @@ public class DisplayScheduleController implements Initializable {
 
     @FXML
     void onActionExit(ActionEvent event) {
+
+
+        Alert alert = new Alert(Alert.AlertType.WARNING,"Are you sure you would like\nto exit the applicaiton?\nUnsaved changes will not be stored!", ButtonType.YES, ButtonType.NO);
+        alert.setResizable(true);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.YES){
+            System.exit(0);
+        }
+
 
     }
 
