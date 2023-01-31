@@ -12,6 +12,11 @@ public class FirstLevelDiv {
         this.countryID = countryID;
     }
 
+    @Override
+    public String toString() {
+        return (division + " " + divisionID);
+    }
+
     public int getDivisionID() {
         return divisionID;
     }

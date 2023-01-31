@@ -20,66 +20,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <children>
-      <TableView fx:id="appointmentTableView" layoutX="175.0" layoutY="115.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="1569.0" AnchorPane.bottomAnchor="595.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="115.0">
-         <columns>
-            <TableColumn fx:id="appointmentIDCol" maxWidth="1.7976931348623157E308" prefWidth="150.0" text="Appointment ID" />
-            <TableColumn fx:id="appointmentTitleCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Title" />
-            <TableColumn fx:id="appointmentDescriptionCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Description" />
-            <TableColumn fx:id="appointmentLocationCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Location" />
-            <TableColumn fx:id="appointmentTypeCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Type" />
-            <TableColumn fx:id="appointmentStartCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Start" />
-            <TableColumn fx:id="appointmentEndCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="End" />
-            <TableColumn fx:id="appointmentCustomerCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" resizable="false" text="Customer" />
-            <TableColumn fx:id="appointmentContactCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Contact" />
-            <TableColumn fx:id="appointmentUserCol" maxWidth="1.7976931348623157E308" prefWidth="127.0" text="User" />
-         </columns>
-      </TableView>
-      <VBox layoutX="73.0" layoutY="58.0" prefHeight="130.0" prefWidth="209.0">
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </VBox>
-      <VBox layoutX="1161.0" layoutY="496.0" prefHeight="88.0" prefWidth="196.0" AnchorPane.bottomAnchor="496.0" AnchorPane.rightAnchor="563.0">
-         <children>
-         <RadioButton fx:id="viewApptByMonth" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" prefHeight="19.0" prefWidth="181.0" text="View Appointments by Month">
-            <padding>
-               <Insets top="20.0" />
-            </padding>
-         </RadioButton>
-         <RadioButton fx:id="viewApptsByWeek" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" text="View Appoints by Week">
-            <padding>
-               <Insets top="20.0" />
-            </padding>
-         </RadioButton>
-         </children>
-      </VBox>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="778.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Application" AnchorPane.bottomAnchor="999.275390625" AnchorPane.leftAnchor="778.0" AnchorPane.rightAnchor="780.443359375" AnchorPane.topAnchor="34.9130859375">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="779.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Application" AnchorPane.bottomAnchor="1002.0" AnchorPane.leftAnchor="779.0" AnchorPane.rightAnchor="779.443359375" AnchorPane.topAnchor="29.0">
          <font>
             <Font name="Book Antiqua" size="38.0" />
          </font>
       </Text>
-      <HBox fillHeight="false" layoutX="736.0" layoutY="510.0" prefHeight="30.0" prefWidth="437.0" AnchorPane.bottomAnchor="540.0" AnchorPane.rightAnchor="747.0">
-         <children>
-            <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports">
-               <HBox.margin>
-                  <Insets left="50.0" />
-               </HBox.margin>
-            </Button>
-         <Button fx:id="customersBtn" mnemonicParsing="false" onAction="#onActionCustomers" text="Customers">
-               <HBox.margin>
-                  <Insets left="50.0" />
-               </HBox.margin>
-         </Button>
-         <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" prefHeight="25.0" prefWidth="101.0" text="Exit Application">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets left="50.0" right="50.0" />
-               </HBox.margin>
-         </Button>
-         </children>
-      </HBox>
       <GridPane layoutX="175.0" layoutY="635.0" prefHeight="313.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.6666259765625" minWidth="10.0" prefWidth="412.6666666666667" />
@@ -123,22 +68,22 @@
                   </Text>
                   <Pane prefHeight="200.0" prefWidth="515.0" GridPane.columnIndex="1">
                      <children>
-                        <TextField layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="aptTitleTxtField" layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="220.0" promptText="Enter the title of your appointment" />
                      </children>
                   </Pane>
                   <Pane layoutX="149.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="aptDescTxtField" layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="220.0" promptText="Enter appointment description" />
                      </children>
                   </Pane>
                   <Pane layoutX="149.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="aptLocationTxtField" layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="220.0" promptText="Enter appointment location" />
                      </children>
                   </Pane>
                   <Pane layoutX="149.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <TextField layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="aptTypeTxtField" layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="220.0" promptText="Enter appointment type" />
                      </children>
                   </Pane>
                </children>
@@ -162,57 +107,107 @@
                         <Insets />
                      </GridPane.margin>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End Date:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <DatePicker layoutX="7.0" layoutY="27.0" />
+                        <DatePicker fx:id="startDatePicker" layoutX="7.0" layoutY="27.0" promptText="Select Appointment Date" />
                      </children>
                   </Pane>
                   <Pane layoutX="362.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <DatePicker layoutX="7.0" layoutY="27.0" />
+                        <TextField fx:id="aptContactTxtField" layoutX="14.0" layoutY="27.0" promptText="Enter contact number" />
                      </children>
                   </Pane>
                   <Pane layoutX="362.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField layoutX="14.0" layoutY="26.0" />
+                        <TextField fx:id="aptCustomerTxtField" layoutX="14.0" layoutY="26.0" promptText="Enter customer number" />
                      </children>
                   </Pane>
                   <Text layoutX="319.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                   <Pane layoutX="362.0" layoutY="196.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <TextField layoutX="14.0" layoutY="26.0" />
+                        <TextField fx:id="aptUserTxtField" layoutX="14.0" layoutY="26.0" promptText="Enter user number" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                      <children>
-                        <ComboBox layoutX="14.0" layoutY="39.0" prefWidth="150.0" />
-                        <ComboBox layoutX="164.0" layoutY="39.0" prefWidth="150.0" />
-                        <Text layoutX="59.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hour" />
-                        <Text layoutX="210.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Minute" />
+                        <ComboBox fx:id="startTimeCombo" layoutX="11.0" layoutY="27.0" prefWidth="150.0" promptText="Select start time" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <children>
-                        <ComboBox layoutX="14.0" layoutY="39.0" prefWidth="150.0" />
-                        <ComboBox layoutX="164.0" layoutY="39.0" prefWidth="150.0" />
-                        <Text layoutX="64.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hour" />
-                        <Text layoutX="211.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Minute" />
+                        <ComboBox fx:id="endTimeCombo" layoutX="8.0" layoutY="27.0" prefWidth="150.0" promptText="Select end time" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <children>
-                        <TextField layoutX="14.0" layoutY="26.0" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <TextField fx:id="aptIdTxtField" layoutX="6.0" layoutY="26.0" prefHeight="25.0" prefWidth="52.0" />
+                     </children></Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <children>
+                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionSubmitChanges" prefHeight="25.0" prefWidth="150.0" text="Submit Changes" />
+                     </children></Pane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End Time:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
       </GridPane>
+      <Pane layoutX="174.0" layoutY="94.0" prefHeight="519.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="94.0">
+         <children>
+            <HBox fillHeight="false" layoutX="566.0" layoutY="460.0" prefHeight="30.0" prefWidth="437.0">
+               <children>
+                  <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Button>
+               <Button fx:id="customersBtn" mnemonicParsing="false" onAction="#onActionCustomers" text="Customers">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+               </Button>
+               <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" prefHeight="25.0" prefWidth="101.0" text="Exit Application">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </HBox.margin>
+               </Button>
+               </children>
+            </HBox>
+            <VBox layoutX="1003.0" layoutY="431.0" prefHeight="88.0" prefWidth="196.0">
+               <children>
+               <RadioButton fx:id="apptByMonthRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" prefHeight="19.0" prefWidth="181.0" text="View Appointments by Month">
+                  <padding>
+                     <Insets top="20.0" />
+                  </padding>
+               </RadioButton>
+               <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" text="View Appoints by Week">
+                  <padding>
+                     <Insets top="20.0" />
+                  </padding>
+               </RadioButton>
+               </children>
+            </VBox>
+            <TableView fx:id="appointmentTableView" layoutX="131.0" layoutY="61.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="1307.0">
+               <columns>
+                  <TableColumn fx:id="appointmentIDCol" maxWidth="1.7976931348623157E308" prefWidth="150.0" text="Appointment ID" />
+                  <TableColumn fx:id="appointmentTitleCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Title" />
+                  <TableColumn fx:id="appointmentDescriptionCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Description" />
+                  <TableColumn fx:id="appointmentLocationCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Location" />
+                  <TableColumn fx:id="appointmentTypeCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Type" />
+                  <TableColumn fx:id="appointmentStartCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Start" />
+                  <TableColumn fx:id="appointmentEndCol" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="End" />
+                  <TableColumn fx:id="appointmentCustomerCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" resizable="false" text="Customer" />
+                  <TableColumn fx:id="appointmentContactCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Contact" />
+                  <TableColumn fx:id="appointmentUserCol" maxWidth="1.7976931348623157E308" prefWidth="127.0" text="User" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

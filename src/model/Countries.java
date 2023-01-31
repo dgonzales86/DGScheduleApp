@@ -5,6 +5,16 @@ public class Countries {
     private int countryID;
     private String country;
 
+    public Countries(int countryID, String country) {
+        this.countryID = countryID;
+        this.country = country;
+
+    }
+
+    @Override
+    public String toString(){
+        return (Integer.toString(countryID) + " " + country);
+    }
     public int getCountryID() {
         return countryID;
     }
@@ -21,9 +31,5 @@ public class Countries {
         this.country = country;
     }
 
-    public Countries(int countryID, String country) {
-        this.countryID = countryID;
-        this.country = country;
 
-    }
 }

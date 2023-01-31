@@ -1,6 +1,11 @@
 package controller;
 
+import DAO.CountriesQuery;
+import DAO.CustomersQuery;
+import DAO.FirstLevelDivQuery;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +15,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Countries;
 import model.Customers;
+import model.FirstLevelDiv;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,9 +26,15 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static DAO.CustomersQuery.*;
+import static DAO.FirstLevelDivQuery.getAllFirstLevelDivs;
+import static DAO.FirstLevelDivQuery.populateFirstLevelDivs;
+
 
 public class CustomersController implements Initializable {
-    public TableView<Customers> customerTableView;
+
+    public TableView<model.Customers> customerTableView;
+    public ComboBox<model.Countries> countryComboBox;
+    public ComboBox<model.FirstLevelDiv> regionComboBox;
     public TextField cusIDTxtField;
     public TextField cusNameTxtField;
     public TextField cusAddressTxtField;
@@ -36,7 +49,14 @@ public class CustomersController implements Initializable {
     public TableColumn cusPostalCodeCol;
     public TableColumn cusPhoneCol;
     public TableColumn cusDivIdCol;
+    public Button deleteCusBtn;
+    public Button navigateBackBtn;
+
     Stage stage;
+    
+
+
+
 
     public void onActionModifyCus(ActionEvent actionEvent) throws SQLException {
 
@@ -61,11 +81,13 @@ public class CustomersController implements Initializable {
     }
     public void onActionAddCus(ActionEvent actionEvent) throws SQLException {
 
+
+
         String cusName = cusNameTxtField.getText();
         String cusAddress = cusAddressTxtField.getText();
         String cusPostCode = cusPostalCodeTxtField.getText();
         String cusPhone = cusPhoneTxtField.getText();
-        int cusDivId = Integer.parseInt(cusDivIdTxtField.getText());
+        int cusDivId = regionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Is the customer information entered correct?",ButtonType.YES,ButtonType.NO);
         alert.setResizable(true);
         Optional<ButtonType> result = alert.showAndWait();
@@ -121,16 +143,18 @@ public class CustomersController implements Initializable {
         cusDivIdCol.setCellValueFactory(new PropertyValueFactory<>("customerDivID"));
         customerTableView.refresh();
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        refreshCustomerTable();
-
-
+    public void populateCusTable(){
 
         customerTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
+                for(int i= 0; i< regionComboBox.getItems().size(); i++){
+                    model.FirstLevelDiv firstLevelDiv = regionComboBox.getItems().get(i);
+                    if(firstLevelDiv.getDivisionID() == newValue.getCustomerDivID()){
+                        regionComboBox.setValue(firstLevelDiv);
+                    }
+
+                }
+
                 cusIDTxtField.setText(String.valueOf(newValue.getCustomerID()));
                 cusNameTxtField.setText(newValue.getCustomerName());
                 cusAddressTxtField.setText(newValue.getCustomerAddress());
@@ -138,8 +162,42 @@ public class CustomersController implements Initializable {
                 cusPhoneTxtField.setText(newValue.getCustomerPhone());
                 cusDivIdTxtField.setText(String.valueOf(newValue.getCustomerDivID()));
 
+
+
             }
         });
+    }
+    public void setRegionComboBox() throws SQLException {
+        FirstLevelDivQuery.populateFirstLevelDivs();
+        regionComboBox.setItems(FirstLevelDivQuery.getAllFirstLevelDivs());
+    }
+    public void setCountryCombo() throws SQLException {
+        //populate country combo box with query select* from countries.
+       CountriesQuery.populateCountries();
+       countryComboBox.setItems(CountriesQuery.getAllCountries());
+      //populateFirstLevelDivs(countryComboBox.getSelectionModel().getSelectedItem().getDivisionID());
+
+       //populate division combo box with observable list from line 158
+
+        }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cusIDTxtField.setDisable(true);
+        cusDivIdTxtField.setDisable(true);
+        refreshCustomerTable();
+        populateCusTable();
+        try {
+            setCountryCombo();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            setRegionComboBox();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
