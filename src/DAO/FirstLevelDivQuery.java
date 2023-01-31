@@ -17,6 +17,8 @@ public class FirstLevelDivQuery {
 //    COLUMN_COUNTRY_ID = "Country_ID";
 
     private static ObservableList<FirstLevelDiv> allFirstLevelDivs = FXCollections.observableArrayList();
+    private static ObservableList<FirstLevelDiv> sortedFirstLevelDivs = FXCollections.observableArrayList();
+
 // populate first level div should populate country id
     // SELECT statement should have WHERE clause for countryID
     public static ObservableList<FirstLevelDiv> populateFirstLevelDivs() throws SQLException{
@@ -38,7 +40,22 @@ public class FirstLevelDivQuery {
         return allFirstLevelDivs;
     }
 
-
+    public static ObservableList<FirstLevelDiv> populateSortedFirstLevelDivs(int countryID) throws SQLException {
+        String sql = "SELECT * FROM first_level_divisions WHERE Country_ID =?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,countryID);
+        ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int divID = rs.getInt("Division_ID");
+                String division = rs.getString("Division");
+                int countID = rs.getInt("Country_ID");
+                sortedFirstLevelDivs.add(new FirstLevelDiv(divID,division,countID));
+            }
+        return sortedFirstLevelDivs;
+    }
+    public static ObservableList<FirstLevelDiv> getSortedFirstLevelDivs(){
+        return sortedFirstLevelDivs;
+    }
 
 
 }

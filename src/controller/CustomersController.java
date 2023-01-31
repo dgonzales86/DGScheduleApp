@@ -26,8 +26,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static DAO.CustomersQuery.*;
-import static DAO.FirstLevelDivQuery.getAllFirstLevelDivs;
-import static DAO.FirstLevelDivQuery.populateFirstLevelDivs;
+import static DAO.FirstLevelDivQuery.*;
 
 
 public class CustomersController implements Initializable {
@@ -51,13 +50,28 @@ public class CustomersController implements Initializable {
     public TableColumn cusDivIdCol;
     public Button deleteCusBtn;
     public Button navigateBackBtn;
+    public Button clearFormBtn;
 
     Stage stage;
-    
 
 
 
 
+    public void onActionSetCountry(ActionEvent actionEvent) throws SQLException {
+
+        FirstLevelDivQuery.getAllFirstLevelDivs().removeAll(populateFirstLevelDivs());
+        FirstLevelDivQuery.getSortedFirstLevelDivs().removeAll(populateSortedFirstLevelDivs
+                (countryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+        populateSortedFirstLevelDivs(countryComboBox.getSelectionModel().getSelectedItem().getCountryID());
+        getSortedFirstLevelDivs();
+        System.out.println(getSortedFirstLevelDivs());
+        regionComboBox.setItems(FirstLevelDivQuery.getSortedFirstLevelDivs());
+        regionComboBox.setDisable(false);
+    }
+
+    public void onActionSetRegion(ActionEvent actionEvent) throws SQLException {
+
+    }
     public void onActionModifyCus(ActionEvent actionEvent) throws SQLException {
 
 
@@ -67,7 +81,7 @@ public class CustomersController implements Initializable {
         String cusAddress = cusAddressTxtField.getText();
         String cusPostCode = cusPostalCodeTxtField.getText();
         String cusPhone = cusPhoneTxtField.getText();
-        int cusDivId = Integer.parseInt(cusDivIdTxtField.getText());
+        int cusDivId = regionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you would like to make changes to this customer's record?",ButtonType.YES,ButtonType.NO);
         alert.setResizable(true);
@@ -124,6 +138,17 @@ public class CustomersController implements Initializable {
         stage.show();
 
     }
+    public void onActionClearForm(ActionEvent actionEvent) {
+        refreshCustomerTable();
+        cusIDTxtField.setText(null);
+        cusNameTxtField.setText(null);
+        cusAddressTxtField.setText(null);
+        cusPostalCodeTxtField.setText(null);
+        cusPhoneTxtField.setText(null);
+        countryComboBox.setButtonCell(null);
+        regionComboBox.setButtonCell(null);
+
+    }
 
     public void refreshCustomerTable(){
         try {
@@ -141,6 +166,7 @@ public class CustomersController implements Initializable {
         cusAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         cusPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
         cusDivIdCol.setCellValueFactory(new PropertyValueFactory<>("customerDivID"));
+        cusPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         customerTableView.refresh();
     }
     public void populateCusTable(){
@@ -151,8 +177,8 @@ public class CustomersController implements Initializable {
                     model.FirstLevelDiv firstLevelDiv = regionComboBox.getItems().get(i);
                     if(firstLevelDiv.getDivisionID() == newValue.getCustomerDivID()){
                         regionComboBox.setValue(firstLevelDiv);
-                    }
 
+                    }
                 }
 
                 cusIDTxtField.setText(String.valueOf(newValue.getCustomerID()));
@@ -168,11 +194,17 @@ public class CustomersController implements Initializable {
         });
     }
     public void setRegionComboBox() throws SQLException {
+        FirstLevelDivQuery.getAllFirstLevelDivs().removeAll(FirstLevelDivQuery.getSortedFirstLevelDivs());
         FirstLevelDivQuery.populateFirstLevelDivs();
         regionComboBox.setItems(FirstLevelDivQuery.getAllFirstLevelDivs());
+        boolean flag = (true);
+        if(countryComboBox.getSelectionModel().getSelectedItem() == null){
+            regionComboBox.setDisable(true);
+        }else regionComboBox.setDisable(false);
     }
     public void setCountryCombo() throws SQLException {
         //populate country combo box with query select* from countries.
+       CountriesQuery.populateCountries().removeAll(CountriesQuery.populateCountries());
        CountriesQuery.populateCountries();
        countryComboBox.setItems(CountriesQuery.getAllCountries());
       //populateFirstLevelDivs(countryComboBox.getSelectionModel().getSelectedItem().getDivisionID());
@@ -188,12 +220,15 @@ public class CustomersController implements Initializable {
         refreshCustomerTable();
         populateCusTable();
         try {
+            countryComboBox.getSelectionModel().clearSelection();
             setCountryCombo();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+         //populates region combo box
         try {
+            regionComboBox.getSelectionModel().clearSelection();
             setRegionComboBox();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -201,6 +236,5 @@ public class CustomersController implements Initializable {
 
 
     }
-
 
 }

@@ -16,6 +16,7 @@ import model.Appointments;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -29,14 +30,16 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 public class DisplayScheduleController implements Initializable {
 
+    private LocalDate localDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     public TextField aptIdTxtField;
     public Button submitChangeBtn;
     public TextField aptContactTxtField;
     public TextField aptCustomerTxtField;
     public TextField aptUserTxtField;
     Stage stage;
-    private LocalTime startTime;
-    private LocalTime endTime;
+
 
     @FXML
     public TextField aptTitleTxtField;
@@ -107,10 +110,20 @@ public class DisplayScheduleController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.YES) {
             System.exit(0);
         }
-
-
+    }
+    public void onActionStartTime(ActionEvent actionEvent) {
+        startTime = (LocalTime) startTimeCombo.getValue();
+        System.out.println(startTime);
     }
 
+    public void onActionEndTime(ActionEvent actionEvent) {
+        endTime = (LocalTime) endTimeCombo.getValue();
+        System.out.println(endTime);
+    }
+    public void onActionSelectDate(ActionEvent actionEvent) {
+        localDate = startDatePicker.getValue();
+        System.out.println(localDate);
+    }
     @FXML
     void onActionViewApptsByMonth(ActionEvent event) {
 
@@ -125,6 +138,10 @@ public class DisplayScheduleController implements Initializable {
     }
 
     public void onActionSubmitChanges(ActionEvent actionEvent) {
+        LocalDateTime startlocalDateTime = LocalDateTime.of(localDate,startTime);
+        LocalDateTime endLocalDateTimeSystem = LocalDateTime.of(localDate,endTime);
+        System.out.println(startlocalDateTime);
+        System.out.println(endLocalDateTimeSystem);
     }
 
     public void popStartTimeCombo() {
@@ -199,11 +216,10 @@ public class DisplayScheduleController implements Initializable {
         popTableView();
         popStartTimeCombo();
         popEndTimeCombo();
+        aptIdTxtField.setDisable(true);
 
 
     }
-
-
 
 }
 
