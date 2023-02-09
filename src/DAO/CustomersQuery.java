@@ -21,7 +21,7 @@ public class CustomersQuery {
     private static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
     public static ObservableList<Customers> populateCustomers() throws SQLException{
-        String sql = "SELECT * FROM Customers";
+        String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division  FROM customers INNER JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID";
 
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -32,7 +32,8 @@ public class CustomersQuery {
                 String customerPhone = rs.getString("Phone" );
                 String customerPostalCode = rs.getString("Postal_Code");
                 int customerDivId = rs.getInt("Division_ID");
-                allCustomers.add(new Customers(customerID,customerName,customerAddress,customerPostalCode,customerPhone,customerDivId));
+                String customerDiv = rs.getString("Division");
+                allCustomers.add(new Customers(customerID,customerName,customerAddress,customerPostalCode,customerPhone,customerDivId,customerDiv));
 
             }
             return allCustomers;

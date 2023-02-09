@@ -76,6 +76,7 @@ public class LoginScreenController implements Initializable
                     Parent scene = loader.getRoot();
                     stage.setScene(new Scene(scene));
                     stage.show();
+
                 }catch (IllegalStateException e){
                     e.printStackTrace();
                     e.getMessage();

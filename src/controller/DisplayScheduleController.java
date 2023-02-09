@@ -1,6 +1,7 @@
 
 package controller;
 
+import DAO.AppointmentsQuery;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,16 +31,21 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 public class DisplayScheduleController implements Initializable {
 
+    Stage stage;
+
+    public Button deleteAptBtn;
+    public Button clearFormBtn;
+    public Button modifyAptBtn;
     private LocalDate localDate;
     private LocalTime startTime;
     private LocalTime endTime;
+    private LocalDateTime appointmentStart;
+    private LocalDateTime appointmentEnd;
     public TextField aptIdTxtField;
     public Button submitChangeBtn;
     public TextField aptContactTxtField;
     public TextField aptCustomerTxtField;
     public TextField aptUserTxtField;
-    Stage stage;
-
 
     @FXML
     public TextField aptTitleTxtField;
@@ -88,6 +94,16 @@ public class DisplayScheduleController implements Initializable {
     @FXML
     private Button exitBtn;
 
+    public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
+
+        String title = aptTitleTxtField.getText();
+        int aptID = Integer.parseInt(aptIdTxtField.getText());
+        AppointmentsQuery.deleteAppointment(title,aptID);
+        refreshAppointmentsTable();
+        appointmentTableView.refresh();
+
+    }
+
     @FXML
     void onActionCustomers(ActionEvent event) throws IOException {
 
@@ -104,7 +120,7 @@ public class DisplayScheduleController implements Initializable {
     void onActionExit(ActionEvent event) {
 
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you would like\nto exit the applicaiton?\nUnsaved changes will not be stored!", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you would like\nto exit the application?\nUnsaved changes will not be stored!", ButtonType.YES, ButtonType.NO);
         alert.setResizable(true);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
@@ -137,11 +153,32 @@ public class DisplayScheduleController implements Initializable {
     public void onActionViewReports(ActionEvent actionEvent) {
     }
 
-    public void onActionSubmitChanges(ActionEvent actionEvent) {
-        LocalDateTime startlocalDateTime = LocalDateTime.of(localDate,startTime);
-        LocalDateTime endLocalDateTimeSystem = LocalDateTime.of(localDate,endTime);
-        System.out.println(startlocalDateTime);
-        System.out.println(endLocalDateTimeSystem);
+    public void onActionSubmitChanges(ActionEvent actionEvent) throws SQLException {
+
+
+        appointmentStart = LocalDateTime.of(localDate,startTime);
+        appointmentEnd = LocalDateTime.of(localDate,endTime);
+
+        String aptTitle = aptTitleTxtField.getText();
+        String aptDesc = aptDescTxtField.getText();
+        String aptLoc = aptLocationTxtField.getText();
+        String aptType = aptTypeTxtField.getText();
+        int aptContact = Integer.parseInt(aptContactTxtField.getText());
+        int aptCustomer = Integer.parseInt(aptCustomerTxtField.getText());
+        int aptUser = Integer.parseInt(aptUserTxtField.getText());
+
+        appointmentTableView.refresh();
+        refreshAppointmentsTable();
+        System.out.println(appointmentStart);
+        System.out.println(appointmentEnd);
+
+        if (appointmentEnd.isAfter(appointmentStart)){
+            AppointmentsQuery.insertAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact);
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
+            alert.showAndWait();
+        }
+
     }
 
     public void popStartTimeCombo() {
@@ -186,10 +223,30 @@ public class DisplayScheduleController implements Initializable {
         appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
     }
 
-    public void popTableView() {
+    public void onActionClearForm(ActionEvent actionEvent) {
+
+        aptTitleTxtField.setText(null);
+        aptDescTxtField.setText(null);
+        aptLocationTxtField.setText(null);
+        aptTypeTxtField.setText(null);
+        startDatePicker.setValue(null);
+        aptContactTxtField.setText(null);
+        aptCustomerTxtField.setText(null);
+        aptUserTxtField.setText(null);
+        startTimeCombo.getSelectionModel().clearSelection();
+        endTimeCombo.getSelectionModel().clearSelection();
+        aptIdTxtField.setText(null);
+
+
+    }
+
+
+    public void getAppointmentSelection() {
+
 
         appointmentTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
+
                 aptIdTxtField.setText(String.valueOf(newValue.getAppointmentID()));
                 aptTitleTxtField.setText(String.valueOf(newValue.getAppointmentTitle()));
                 aptDescTxtField.setText(String.valueOf(newValue.getAppointmentDesc()));
@@ -198,11 +255,10 @@ public class DisplayScheduleController implements Initializable {
                 aptContactTxtField.setText(String.valueOf(newValue.getContactID()));
                 aptCustomerTxtField.setText(String.valueOf(newValue.getCustomerID()));
                 aptUserTxtField.setText(String.valueOf(newValue.getUserID()));
+                startDatePicker.setValue(newValue.getStart().toLocalDate());
+                startTimeCombo.setValue(newValue.getStart().toLocalTime());
+                endTimeCombo.setValue(newValue.getEnd().toLocalTime());
 
-
-
-
-                //startDatePicker.setDayCellFactory(newValue.getStart().getDayOfMonth());
 
 
             }
@@ -213,7 +269,7 @@ public class DisplayScheduleController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         refreshAppointmentsTable();
-        popTableView();
+        getAppointmentSelection();
         popStartTimeCombo();
         popEndTimeCombo();
         aptIdTxtField.setDisable(true);
@@ -221,6 +277,8 @@ public class DisplayScheduleController implements Initializable {
 
     }
 
+    public void onActionModifyApt(ActionEvent actionEvent) {
+    }
 }
 
 

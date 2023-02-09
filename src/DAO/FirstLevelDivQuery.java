@@ -22,10 +22,12 @@ public class FirstLevelDivQuery {
 // populate first level div should populate country id
     // SELECT statement should have WHERE clause for countryID
     public static ObservableList<FirstLevelDiv> populateFirstLevelDivs() throws SQLException{
-        String sql = "SELECT * FROM first_level_divisions ORDER BY Division";
 
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+        if(allFirstLevelDivs.size() == 0){
+            String sql = "SELECT * FROM first_level_divisions ORDER BY Division";
+
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 int divID = rs.getInt("Division_ID");
                 String division = rs.getString("Division");
@@ -33,11 +35,14 @@ public class FirstLevelDivQuery {
                 allFirstLevelDivs.add(new FirstLevelDiv(divID,division,countryID));
 
             }
+
+        }
             return allFirstLevelDivs;
     }
 
-    public static ObservableList<FirstLevelDiv> getAllFirstLevelDivs(){
-        return allFirstLevelDivs;
+    public static ObservableList<FirstLevelDiv> getAllFirstLevelDivs() throws SQLException {
+
+        return populateFirstLevelDivs();
     }
 
     public static ObservableList<FirstLevelDiv> populateSortedFirstLevelDivs(int countryID) throws SQLException {
@@ -57,5 +62,13 @@ public class FirstLevelDivQuery {
         return sortedFirstLevelDivs;
     }
 
+    public static FirstLevelDiv getDivision(int divID) throws SQLException {
+        for(FirstLevelDiv div: getAllFirstLevelDivs()){
+            if(div.getDivisionID() == divID){
+                return div;
+            }
+        }
+        return null;
+    }
 
 }

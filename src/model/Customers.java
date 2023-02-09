@@ -8,13 +8,20 @@ public class Customers {
     private String customerPhone;
     private int customerDivID;
 
-    public Customers(int customerID, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivID) {
+
+
+    private String customerDiv;
+
+
+
+    public Customers(int customerID, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivID, String customerDiv) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
         this.customerPhone = customerPhone;
         this.customerDivID = customerDivID;
+        this.customerDiv = customerDiv;
     }
 
     public int getCustomerID() {
@@ -63,5 +70,13 @@ public class Customers {
 
     public void setCustomerDivID(int customerDivID) {
         this.customerDivID = customerDivID;
+    }
+
+    public String getCustomerDiv() {
+        return customerDiv;
+    }
+
+    public void setCustomerDiv(String customerDiv) {
+        this.customerDiv = customerDiv;
     }
 }

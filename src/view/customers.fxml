@@ -13,19 +13,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomersController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomersController">
     <children>
-        <TableView fx:id="customerTableView" layoutX="281.0" layoutY="132.0" prefHeight="381.0" prefWidth="580.0" AnchorPane.leftAnchor="281.0" AnchorPane.topAnchor="132.0">
+        <TableView fx:id="customerTableView" layoutX="262.0" layoutY="131.0" prefHeight="381.0" prefWidth="709.0" AnchorPane.leftAnchor="262.0" AnchorPane.topAnchor="131.0">
             <columns>
-                <TableColumn fx:id="cusIdCol" prefWidth="89.0" text="Customer ID" />
-                <TableColumn fx:id="cusNameCol" prefWidth="105.0" text="Name" />
-                <TableColumn fx:id="cusAddressCol" prefWidth="124.0" text="Address" />
+                <TableColumn fx:id="cusIdCol" prefWidth="76.0" text="Customer ID" />
+                <TableColumn fx:id="cusNameCol" prefWidth="99.0" text="Name" />
+                <TableColumn fx:id="cusAddressCol" prefWidth="123.0" text="Address" />
                 <TableColumn fx:id="cusPostalCodeCol" prefWidth="82.0" text="Postal Code" />
-                <TableColumn fx:id="cusPhoneCol" prefWidth="100.0" text="Phone" />
-                <TableColumn fx:id="cusDivIdCol" prefWidth="77.0" text="Division ID" />
+                <TableColumn fx:id="cusPhoneCol" prefWidth="101.0" text="Phone" />
+                <TableColumn fx:id="cusDivIdCol" prefWidth="69.0" text="Division ID" />
+            <TableColumn fx:id="cusDivCol" prefWidth="123.0" text="Division" />
             </columns>
         </TableView>
-        <VBox layoutX="32.0" layoutY="109.0" prefHeight="451.0" prefWidth="232.0">
+        <VBox layoutX="14.0" layoutY="115.0" prefHeight="451.0" prefWidth="232.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID:" />
                 <TextField fx:id="cusIDTxtField" prefHeight="3.0" prefWidth="272.0" promptText="Auto Generated">
@@ -72,23 +73,24 @@
             <TextField fx:id="cusDivIdTxtField" promptText="Auto Populates" />
             </children>
         </VBox>
-        <Text layoutX="326.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add or Modify Customer">
+        <Text layoutX="341.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add or Modify Customer">
             <font>
                 <Font size="29.0" />
             </font>
         </Text>
-        <Text layoutX="478.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a customer to modify record" />
+        <Text fx:id="instructionTxt" layoutX="286.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <HBox layoutX="286.0" layoutY="522.0" prefHeight="25.0" prefWidth="573.0" spacing="20.0">
          <children>
-              <Button fx:id="addCustomerBtn" mnemonicParsing="false" onAction="#onActionAddCus" prefHeight="25.0" prefWidth="104.0" text="Add Customer">
+            <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" onMouseEntered="#onMouseEnterClearForm" prefHeight="25.0" prefWidth="79.0" text="Clear Form" />
+              <Button fx:id="addCustomerBtn" mnemonicParsing="false" onAction="#onActionAddCus" onMouseEntered="#onMouseEnterAddCus" prefHeight="25.0" prefWidth="104.0" text="Add Customer">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin></Button>
-              <Button fx:id="modifyCusBtn" mnemonicParsing="false" onAction="#onActionModifyCus" text="Modify Customer" />
-            <Button fx:id="deleteCusBtn" mnemonicParsing="false" onAction="#onActionDeleteCus" prefHeight="25.0" prefWidth="110.0" text="Delete Customer" />
-            <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" prefHeight="25.0" prefWidth="79.0" text="Clear Form" />
-            <Button fx:id="navigateBackBtn" mnemonicParsing="false" onAction="#onActionNavigateBack" prefHeight="25.0" prefWidth="64.0" text="Back" />
+              <Button fx:id="modifyCusBtn" mnemonicParsing="false" onAction="#onActionModifyCus" onMouseEntered="#onMouseEnterModCus" text="Modify Customer" />
+            <Button fx:id="deleteCusBtn" mnemonicParsing="false" onAction="#onActionDeleteCus" onMouseEntered="#onMouseEnterDeleteCus" prefHeight="25.0" prefWidth="110.0" text="Delete Customer" />
+            <Button fx:id="navigateBackBtn" mnemonicParsing="false" onAction="#onActionNavigateBack" onMouseEntered="#onMouseEnterBack" prefHeight="25.0" prefWidth="64.0" text="Back" />
          </children>
       </HBox>
+      <Text layoutX="20.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adding a customer record: To add a new customer, completely fill the form with customer information and click &quot;Add Customer&quot;" wrappingWidth="685.71484375" />
     </children>
 </AnchorPane>

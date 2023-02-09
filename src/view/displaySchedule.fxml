@@ -18,14 +18,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="943.0" prefWidth="1629.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <children>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="779.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Application" AnchorPane.bottomAnchor="1002.0" AnchorPane.leftAnchor="779.0" AnchorPane.rightAnchor="779.443359375" AnchorPane.topAnchor="29.0">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="648.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Application" AnchorPane.bottomAnchor="880.0" AnchorPane.leftAnchor="648.0" AnchorPane.rightAnchor="619.443359375" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="Book Antiqua" size="38.0" />
          </font>
       </Text>
-      <GridPane layoutX="175.0" layoutY="635.0" prefHeight="313.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
+      <GridPane layoutX="30.0" layoutY="615.0" prefHeight="313.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.6666259765625" minWidth="10.0" prefWidth="412.6666666666667" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1154.0" minWidth="10.0" prefWidth="1154.0" />
@@ -110,23 +110,23 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <DatePicker fx:id="startDatePicker" layoutX="7.0" layoutY="27.0" onAction="#onActionSelectDate" promptText="Select Appointment Date" />
+                        <DatePicker fx:id="startDatePicker" layoutX="7.0" layoutY="27.0" onAction="#onActionSelectDate" promptText="Select appointment date" />
                      </children>
                   </Pane>
                   <Pane layoutX="362.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="aptContactTxtField" layoutX="14.0" layoutY="27.0" promptText="Enter contact number" />
+                        <TextField fx:id="aptContactTxtField" layoutX="14.0" layoutY="26.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="362.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField fx:id="aptCustomerTxtField" layoutX="14.0" layoutY="26.0" promptText="Enter customer number" />
+                        <TextField fx:id="aptCustomerTxtField" layoutX="14.0" layoutY="26.0" />
                      </children>
                   </Pane>
                   <Text layoutX="319.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                   <Pane layoutX="362.0" layoutY="196.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <TextField fx:id="aptUserTxtField" layoutX="14.0" layoutY="26.0" promptText="Enter user number" />
+                        <TextField fx:id="aptUserTxtField" layoutX="14.0" layoutY="26.0" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
@@ -145,7 +145,8 @@
                      </children></Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionSubmitChanges" prefHeight="25.0" prefWidth="150.0" text="Submit Changes" />
+                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionSubmitChanges" prefHeight="25.0" prefWidth="150.0" text="Add Appointment" />
+                        <Button fx:id="modifyAptBtn" layoutX="204.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionModifyApt" text="Submit Modify Appointment" />
                      </children></Pane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
@@ -155,10 +156,11 @@
             </GridPane>
          </children>
       </GridPane>
-      <Pane layoutX="174.0" layoutY="94.0" prefHeight="519.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="94.0">
+      <Pane layoutX="29.0" layoutY="78.0" prefHeight="519.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="78.0">
          <children>
-            <HBox fillHeight="false" layoutX="566.0" layoutY="460.0" prefHeight="30.0" prefWidth="437.0">
+            <HBox fillHeight="false" layoutX="452.0" layoutY="460.0" prefHeight="30.0" prefWidth="539.0">
                <children>
+                  <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" prefHeight="25.0" prefWidth="92.0" text="Clear Form" />
                   <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports">
                      <HBox.margin>
                         <Insets left="50.0" />
@@ -207,6 +209,7 @@
                   <TableColumn fx:id="appointmentUserCol" maxWidth="1.7976931348623157E308" prefWidth="127.0" text="User" />
                </columns>
             </TableView>
+            <Button fx:id="deleteAptBtn" layoutX="1270.0" layoutY="463.0" mnemonicParsing="false" onAction="#onActionDeleteAppointment" text="Delete Appointment" />
          </children>
       </Pane>
    </children>
