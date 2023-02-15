@@ -115,7 +115,7 @@
                   </Pane>
                   <Pane layoutX="362.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="aptContactTxtField" layoutX="14.0" layoutY="26.0" />
+                        <ComboBox fx:id="contactComboBox" layoutX="14.0" layoutY="27.0" onAction="#onActionContactCombo" prefWidth="150.0" promptText="Select a contact" />
                      </children>
                   </Pane>
                   <Pane layoutX="362.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -145,7 +145,7 @@
                      </children></Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionSubmitChanges" prefHeight="25.0" prefWidth="150.0" text="Add Appointment" />
+                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionAddAppointment" prefHeight="25.0" prefWidth="150.0" text="Add Appointment" />
                         <Button fx:id="modifyAptBtn" layoutX="204.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionModifyApt" text="Submit Modify Appointment" />
                      </children></Pane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
@@ -212,5 +212,6 @@
             <Button fx:id="deleteAptBtn" layoutX="1270.0" layoutY="463.0" mnemonicParsing="false" onAction="#onActionDeleteAppointment" text="Delete Appointment" />
          </children>
       </Pane>
+      <TextField fx:id="aptContactTxtField" layoutX="264.0" layoutY="40.0" />
    </children>
 </AnchorPane>

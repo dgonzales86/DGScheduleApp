@@ -2,6 +2,7 @@
 package controller;
 
 import DAO.AppointmentsQuery;
+import DAO.ContactsQuery;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,13 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Contacts;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -31,8 +31,9 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 public class DisplayScheduleController implements Initializable {
 
-    Stage stage;
 
+    Stage stage;
+    public ComboBox <Contacts> contactComboBox;
     public Button deleteAptBtn;
     public Button clearFormBtn;
     public Button modifyAptBtn;
@@ -153,7 +154,7 @@ public class DisplayScheduleController implements Initializable {
     public void onActionViewReports(ActionEvent actionEvent) {
     }
 
-    public void onActionSubmitChanges(ActionEvent actionEvent) throws SQLException {
+    public void onActionAddAppointment(ActionEvent actionEvent) throws SQLException {
 
 
         appointmentStart = LocalDateTime.of(localDate,startTime);
@@ -163,44 +164,102 @@ public class DisplayScheduleController implements Initializable {
         String aptDesc = aptDescTxtField.getText();
         String aptLoc = aptLocationTxtField.getText();
         String aptType = aptTypeTxtField.getText();
-        int aptContact = Integer.parseInt(aptContactTxtField.getText());
+        Contacts contact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
+        int aptContact = contact.getContactID();
+        // int aptContact = Integer.parseInt(contactComboBox.getValue().toString());
         int aptCustomer = Integer.parseInt(aptCustomerTxtField.getText());
         int aptUser = Integer.parseInt(aptUserTxtField.getText());
 
-        appointmentTableView.refresh();
-        refreshAppointmentsTable();
-        System.out.println(appointmentStart);
-        System.out.println(appointmentEnd);
-
         if (appointmentEnd.isAfter(appointmentStart)){
             AppointmentsQuery.insertAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact);
+            appointmentTableView.refresh();
+            refreshAppointmentsTable();
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
             alert.showAndWait();
         }
 
     }
+    public void onActionModifyApt(ActionEvent actionEvent) throws SQLException {
+
+        appointmentStart = LocalDateTime.of(localDate,startTime);
+        appointmentEnd = LocalDateTime.of(localDate,endTime);
+        String aptTitle = aptTitleTxtField.getText();
+        String aptDesc = aptDescTxtField.getText();
+        String aptLoc = aptLocationTxtField.getText();
+        String aptType = aptTypeTxtField.getText();
+        Contacts contact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
+        int aptContact;
+
+        if(contact != null){
+            aptContact = contact.getContactID();
+        }else {
+            aptContact = Integer.parseInt(contactComboBox.getSelectionModel().getSelectedItem().toString());
+        }
+
+        // int aptContact = Integer.parseInt(contactComboBox.getValue().toString());
+        int aptCustomer = Integer.parseInt(aptCustomerTxtField.getText());
+        int aptUser = Integer.parseInt(aptUserTxtField.getText());
+        int aptID = Integer.parseInt(aptIdTxtField.getText());
+
+        if (appointmentEnd.isAfter(appointmentStart)){
+            AppointmentsQuery.updateAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact,aptID);
+            refreshAppointmentsTable();
+            appointmentTableView.refresh();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
+            alert.showAndWait();
+        }
+
+
+    }
 
     public void popStartTimeCombo() {
 
+        localDate = LocalDate.now();
         startTime = LocalTime.of(8, 0);
         endTime = LocalTime.of(22, 0);
-        while (startTime.isBefore(endTime)) {
-            startTimeCombo.getItems().add(startTime);
-            startTime = startTime.plusMinutes(15);
+        LocalDateTime startLocalDateTime = LocalDateTime.of(localDate,startTime);
+        ZonedDateTime startZonedDateTime = startLocalDateTime.atZone(ZoneId.of("America/New_York"));
+        startZonedDateTime = startZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime endLocalDateTime = LocalDateTime.of(localDate,endTime);
+        ZonedDateTime endZonedDateTime = endLocalDateTime.atZone(ZoneId.of("America/New_York"));
+        endZonedDateTime = endZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime startComboTime = startZonedDateTime.toLocalTime();
+        LocalTime endComboTime = endZonedDateTime.toLocalTime();
+
+        while (startComboTime.isBefore(endComboTime)) {
+            startTimeCombo.getItems().add(startComboTime);
+            startComboTime = startComboTime.plusMinutes(15);
         }
-        startTimeCombo.getSelectionModel().select(LocalTime.of(8, 0));
+        startTimeCombo.getSelectionModel().select(startZonedDateTime.toLocalTime());
     }
 
     public void popEndTimeCombo() {
 
+
         startTime = LocalTime.of(8, 15);
         endTime = LocalTime.of(22, 0);
-        while (startTime.isBefore(endTime.plusSeconds(1))) {
-            endTimeCombo.getItems().add(startTime);
-            startTime = startTime.plusMinutes(15);
+        LocalDateTime startLocalDateTime = LocalDateTime.of(localDate,startTime);
+        ZonedDateTime startZonedDateTime = startLocalDateTime.atZone(ZoneId.of("America/New_York"));
+        startZonedDateTime = startZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime endLocalDateTime = LocalDateTime.of(localDate,endTime);
+        ZonedDateTime endZonedDateTime = endLocalDateTime.atZone(ZoneId.of("America/New_York"));
+        endZonedDateTime = endZonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        LocalTime startComboTime = startZonedDateTime.toLocalTime();
+        LocalTime endComboTime = endZonedDateTime.toLocalTime();
+
+        while (startComboTime.isBefore(endComboTime.plusSeconds(1))) {
+            endTimeCombo.getItems().add(startComboTime);
+            startComboTime = startComboTime.plusMinutes(15);
         }
-        endTimeCombo.getSelectionModel().select(LocalTime.of(8, 15));
+        endTimeCombo.getSelectionModel().select(startZonedDateTime.toLocalTime());
+    }
+    public void setContactCombo() throws SQLException {
+        ContactsQuery.populateContacts();
+
+        contactComboBox.setItems(ContactsQuery.getAllContacts());
+
     }
 
     public void refreshAppointmentsTable() {
@@ -223,6 +282,9 @@ public class DisplayScheduleController implements Initializable {
         appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
     }
 
+    public void onActionContactCombo(ActionEvent actionEvent) {
+    }
+
     public void onActionClearForm(ActionEvent actionEvent) {
 
         aptTitleTxtField.setText(null);
@@ -235,13 +297,17 @@ public class DisplayScheduleController implements Initializable {
         aptUserTxtField.setText(null);
         startTimeCombo.getSelectionModel().clearSelection();
         endTimeCombo.getSelectionModel().clearSelection();
+        contactComboBox.getSelectionModel().clearSelection();
+        contactComboBox.setValue(null);
         aptIdTxtField.setText(null);
+
 
 
     }
 
 
     public void getAppointmentSelection() {
+// trying to figure out how to parse this information...
 
 
         appointmentTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -252,22 +318,39 @@ public class DisplayScheduleController implements Initializable {
                 aptDescTxtField.setText(String.valueOf(newValue.getAppointmentDesc()));
                 aptLocationTxtField.setText(String.valueOf(newValue.getAppointmentLocation()));
                 aptTypeTxtField.setText(String.valueOf(newValue.getAppointmentType()));
-                aptContactTxtField.setText(String.valueOf(newValue.getContactID()));
+                //  aptContactTxtField.setText(String.valueOf(newValue.getContactID()));
                 aptCustomerTxtField.setText(String.valueOf(newValue.getCustomerID()));
                 aptUserTxtField.setText(String.valueOf(newValue.getUserID()));
                 startDatePicker.setValue(newValue.getStart().toLocalDate());
                 startTimeCombo.setValue(newValue.getStart().toLocalTime());
                 endTimeCombo.setValue(newValue.getEnd().toLocalTime());
 
-
-
+                try {
+                    contactComboBox.setValue(ContactsQuery.getContact(newValue.getContactID()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+//                int contact = newValue.getContactID();
+//                //contactComboBox.getSelectionModel().getSelectedItem();
+//                try {
+//                    contactComboBox.setValue(ContactsQuery.getSortedContacts(contact));
+//                    ContactsQuery.getAllSortedContacts().removeAll();
+//                    ContactsQuery.getSortedContacts(contact).removeAll();
+//
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         });
-
     }
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            setContactCombo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         refreshAppointmentsTable();
         getAppointmentSelection();
         popStartTimeCombo();
@@ -277,8 +360,6 @@ public class DisplayScheduleController implements Initializable {
 
     }
 
-    public void onActionModifyApt(ActionEvent actionEvent) {
-    }
 }
 
 

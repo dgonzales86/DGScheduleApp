@@ -78,8 +78,8 @@ public class AppointmentsQuery {
         return rowsAffected;
 
     }
-    public static int updateAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End) throws SQLException {
-        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location=?, Type= ?, Start =?, End =? WHERE Appointment_ID = ?";
+    public static int updateAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID, int Apt_ID) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location=?, Type= ?, Start =?, End =?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1,Title);
         ps.setString(2,Description);
@@ -87,6 +87,10 @@ public class AppointmentsQuery {
         ps.setString(4,Type);
         ps.setTimestamp(5, Timestamp.valueOf(Start));
         ps.setTimestamp(6, Timestamp.valueOf(End));
+        ps.setInt(7, Customer_ID);
+        ps.setInt(8,User_ID);
+        ps.setInt(9,Contact_ID);
+        ps.setInt(10, Apt_ID);
         int rowsAffected = ps.executeUpdate();
         if(rowsAffected > 0){
             System.out.println("Update Successful!");

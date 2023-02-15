@@ -25,6 +25,11 @@ public class Contacts {
      *
      * @return
      */
+
+    @Override
+    public String toString() {
+        return (contactName + " " + contactID);
+    }
     public int getContactID() {
         return contactID;
     }

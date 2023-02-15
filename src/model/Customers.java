@@ -24,6 +24,11 @@ public class Customers {
         this.customerDiv = customerDiv;
     }
 
+    @Override
+    public String toString() {
+        return (customerName + " " + customerID);
+    }
+
     public int getCustomerID() {
         return customerID;
     }
