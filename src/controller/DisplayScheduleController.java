@@ -3,6 +3,8 @@ package controller;
 
 import DAO.AppointmentsQuery;
 import DAO.ContactsQuery;
+import DAO.CustomersQuery;
+import DAO.UserQuery;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Contacts;
+import model.Customers;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,22 +35,31 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 public class DisplayScheduleController implements Initializable {
 
-
     Stage stage;
+    @FXML
+    public ComboBox <Customers> customerCombo;
+    @FXML
+    public ComboBox <User> userCombo;
+    @FXML
+
     public ComboBox <Contacts> contactComboBox;
+    @FXML
     public Button deleteAptBtn;
+    @FXML
     public Button clearFormBtn;
+    @FXML
     public Button modifyAptBtn;
+
     private LocalDate localDate;
+
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDateTime appointmentStart;
     private LocalDateTime appointmentEnd;
+    @FXML
     public TextField aptIdTxtField;
+    @FXML
     public Button submitChangeBtn;
-    public TextField aptContactTxtField;
-    public TextField aptCustomerTxtField;
-    public TextField aptUserTxtField;
 
     @FXML
     public TextField aptTitleTxtField;
@@ -164,11 +177,15 @@ public class DisplayScheduleController implements Initializable {
         String aptDesc = aptDescTxtField.getText();
         String aptLoc = aptLocationTxtField.getText();
         String aptType = aptTypeTxtField.getText();
-        Contacts contact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
+
+        Contacts contact = contactComboBox.getSelectionModel().getSelectedItem();
         int aptContact = contact.getContactID();
-        // int aptContact = Integer.parseInt(contactComboBox.getValue().toString());
-        int aptCustomer = Integer.parseInt(aptCustomerTxtField.getText());
-        int aptUser = Integer.parseInt(aptUserTxtField.getText());
+
+        Customers customers = customerCombo.getSelectionModel().getSelectedItem();
+        int aptCustomer = customers.getCustomerID();
+
+        User users = userCombo.getSelectionModel().getSelectedItem();
+        int aptUser = users.getUserID();
 
         if (appointmentEnd.isAfter(appointmentStart)){
             AppointmentsQuery.insertAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact);
@@ -188,18 +205,31 @@ public class DisplayScheduleController implements Initializable {
         String aptDesc = aptDescTxtField.getText();
         String aptLoc = aptLocationTxtField.getText();
         String aptType = aptTypeTxtField.getText();
-        Contacts contact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
-        int aptContact;
 
+        Contacts contact = contactComboBox.getSelectionModel().getSelectedItem();
+        int aptContact;
         if(contact != null){
             aptContact = contact.getContactID();
         }else {
             aptContact = Integer.parseInt(contactComboBox.getSelectionModel().getSelectedItem().toString());
         }
 
-        // int aptContact = Integer.parseInt(contactComboBox.getValue().toString());
-        int aptCustomer = Integer.parseInt(aptCustomerTxtField.getText());
-        int aptUser = Integer.parseInt(aptUserTxtField.getText());
+        Customers customer = customerCombo.getSelectionModel().getSelectedItem();
+        int aptCustomer;
+        if (customer != null){
+            aptCustomer = customer.getCustomerID();
+        }else {
+            aptCustomer = Integer.parseInt(customerCombo.getSelectionModel().getSelectedItem().toString());
+        }
+
+        User users = userCombo.getSelectionModel().getSelectedItem();
+        int aptUser;
+        if (users != null){
+            aptUser = users.getUserID();
+        }else {
+            aptUser = Integer.parseInt(userCombo.getSelectionModel().getSelectedItem().toString());
+        }
+
         int aptID = Integer.parseInt(aptIdTxtField.getText());
 
         if (appointmentEnd.isAfter(appointmentStart)){
@@ -255,12 +285,17 @@ public class DisplayScheduleController implements Initializable {
         }
         endTimeCombo.getSelectionModel().select(startZonedDateTime.toLocalTime());
     }
-    public void setContactCombo() throws SQLException {
-        ContactsQuery.populateContacts();
+    public void setComboBoxes() throws SQLException {
 
-        contactComboBox.setItems(ContactsQuery.getAllContacts());
+        contactComboBox.setItems(ContactsQuery.populateContacts());
+
+        customerCombo.setItems(CustomersQuery.populateCustomers());
+
+        userCombo.setItems(UserQuery.populateUsers());
 
     }
+
+
 
     public void refreshAppointmentsTable() {
         try {
@@ -285,6 +320,7 @@ public class DisplayScheduleController implements Initializable {
     public void onActionContactCombo(ActionEvent actionEvent) {
     }
 
+
     public void onActionClearForm(ActionEvent actionEvent) {
 
         aptTitleTxtField.setText(null);
@@ -292,13 +328,14 @@ public class DisplayScheduleController implements Initializable {
         aptLocationTxtField.setText(null);
         aptTypeTxtField.setText(null);
         startDatePicker.setValue(null);
-        aptContactTxtField.setText(null);
-        aptCustomerTxtField.setText(null);
-        aptUserTxtField.setText(null);
         startTimeCombo.getSelectionModel().clearSelection();
         endTimeCombo.getSelectionModel().clearSelection();
         contactComboBox.getSelectionModel().clearSelection();
         contactComboBox.setValue(null);
+        customerCombo.getSelectionModel().clearSelection();
+        customerCombo.setValue(null);
+        userCombo.getSelectionModel().clearSelection();
+        userCombo.setValue(null);
         aptIdTxtField.setText(null);
 
 
@@ -307,39 +344,39 @@ public class DisplayScheduleController implements Initializable {
 
 
     public void getAppointmentSelection() {
-// trying to figure out how to parse this information...
-
 
         appointmentTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
+
+
+
 
                 aptIdTxtField.setText(String.valueOf(newValue.getAppointmentID()));
                 aptTitleTxtField.setText(String.valueOf(newValue.getAppointmentTitle()));
                 aptDescTxtField.setText(String.valueOf(newValue.getAppointmentDesc()));
                 aptLocationTxtField.setText(String.valueOf(newValue.getAppointmentLocation()));
                 aptTypeTxtField.setText(String.valueOf(newValue.getAppointmentType()));
-                //  aptContactTxtField.setText(String.valueOf(newValue.getContactID()));
-                aptCustomerTxtField.setText(String.valueOf(newValue.getCustomerID()));
-                aptUserTxtField.setText(String.valueOf(newValue.getUserID()));
                 startDatePicker.setValue(newValue.getStart().toLocalDate());
                 startTimeCombo.setValue(newValue.getStart().toLocalTime());
                 endTimeCombo.setValue(newValue.getEnd().toLocalTime());
+
+                try {
+                    customerCombo.setValue(CustomersQuery.getCustomer(newValue.getCustomerID()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    userCombo.setValue(UserQuery.getUser(newValue.getUserID()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
                 try {
                     contactComboBox.setValue(ContactsQuery.getContact(newValue.getContactID()));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-//                int contact = newValue.getContactID();
-//                //contactComboBox.getSelectionModel().getSelectedItem();
-//                try {
-//                    contactComboBox.setValue(ContactsQuery.getSortedContacts(contact));
-//                    ContactsQuery.getAllSortedContacts().removeAll();
-//                    ContactsQuery.getSortedContacts(contact).removeAll();
-//
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
+
             }
         });
     }
@@ -347,7 +384,7 @@ public class DisplayScheduleController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            setContactCombo();
+            setComboBoxes();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -359,6 +396,7 @@ public class DisplayScheduleController implements Initializable {
 
 
     }
+
 
 }
 

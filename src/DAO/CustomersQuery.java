@@ -59,6 +59,26 @@ public class CustomersQuery {
         return rowsAffected;
     }
 
+    public static Customers getCustomer(int customerID) throws SQLException {
+
+        String sql = "SELECT * FROM customers WHERE Customer_ID =?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,customerID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int cusID = rs.getInt("Customer_ID");
+            String cusName = rs.getString("Customer_Name");
+            String cusAddress = rs.getString("Address");
+            String cusPostalCode = rs.getString("Postal_Code");
+            String cusPhone = rs.getString("Phone");
+            int cusDivId = rs.getInt("Division_ID");
+            return new Customers(cusID,cusName,cusAddress,cusPostalCode,cusPhone,cusDivId,null);
+        }
+        return null;
+
+
+    }
+
     public static int updateCustomer(String Customer_Name, String Address, String Phone, String Postal_Code, int Division_ID, int Customer_ID) throws SQLException {
         String sql = "UPDATE Customers SET Customer_Name = ?, Address = ?, Phone = ?, Postal_Code=?, Division_ID= ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

@@ -11,6 +11,11 @@ public class User {
         this.userPasswd = userPasswd;
     }
 
+    @Override
+    public String toString() {
+        return (userName + " " + userID);
+    }
+
     public int getUserID() {
         return userID;
     }

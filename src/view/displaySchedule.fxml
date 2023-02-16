@@ -120,13 +120,13 @@
                   </Pane>
                   <Pane layoutX="362.0" layoutY="88.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField fx:id="aptCustomerTxtField" layoutX="14.0" layoutY="26.0" />
+                        <ComboBox fx:id="customerCombo" layoutX="14.0" layoutY="27.0" prefWidth="150.0" promptText="Select a customer" />
                      </children>
                   </Pane>
                   <Text layoutX="319.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                   <Pane layoutX="362.0" layoutY="196.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <TextField fx:id="aptUserTxtField" layoutX="14.0" layoutY="26.0" />
+                        <ComboBox fx:id="userCombo" layoutX="14.0" layoutY="26.0" prefWidth="150.0" promptText="Select a user" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
@@ -212,6 +212,5 @@
             <Button fx:id="deleteAptBtn" layoutX="1270.0" layoutY="463.0" mnemonicParsing="false" onAction="#onActionDeleteAppointment" text="Delete Appointment" />
          </children>
       </Pane>
-      <TextField fx:id="aptContactTxtField" layoutX="264.0" layoutY="40.0" />
    </children>
 </AnchorPane>
