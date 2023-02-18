@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Contacts;
@@ -37,6 +39,10 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 public class DisplayScheduleController implements Initializable {
 
+    public ToggleGroup sortDate;
+    public RadioButton allAppointments;
+    public Text buttonHelperTxt;
+    public Text addModifyAptHelperTxt;
     Stage stage;
     @FXML
     public ComboBox <Customers> customerCombo;
@@ -110,6 +116,37 @@ public class DisplayScheduleController implements Initializable {
     @FXML
     private Button exitBtn;
 
+
+    public void allAptsOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void deleteAptOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void aptByWeekOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void aptByMonthOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void exitOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void customersOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void reportsOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void clearFormOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void modifyAptOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
+    public void addAptOnMouseEnter(MouseEvent mouseEvent) {
+    }
+
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
 
         String title = aptTitleTxtField.getText();
@@ -164,6 +201,8 @@ public class DisplayScheduleController implements Initializable {
     @FXML
     void onActionViewApptsByWeek(ActionEvent event) {
 
+    }
+    public void onActionAllAppointments(ActionEvent actionEvent) {
     }
 
     public void onActionViewReports(ActionEvent actionEvent) {

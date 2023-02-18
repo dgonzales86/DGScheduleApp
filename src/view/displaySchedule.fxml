@@ -8,24 +8,24 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="943.0" prefWidth="1629.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1629.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DisplayScheduleController">
    <children>
       <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="648.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Application" AnchorPane.bottomAnchor="880.0" AnchorPane.leftAnchor="648.0" AnchorPane.rightAnchor="619.443359375" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="Book Antiqua" size="38.0" />
          </font>
       </Text>
-      <GridPane layoutX="30.0" layoutY="615.0" prefHeight="313.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
+      <GridPane layoutX="74.0" layoutY="466.0" prefHeight="313.0" prefWidth="1481.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.6666259765625" minWidth="10.0" prefWidth="412.6666666666667" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1154.0" minWidth="10.0" prefWidth="1154.0" />
@@ -145,8 +145,9 @@
                      </children></Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionAddAppointment" prefHeight="25.0" prefWidth="150.0" text="Add Appointment" />
-                        <Button fx:id="modifyAptBtn" layoutX="204.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionModifyApt" text="Submit Modify Appointment" />
+                        <Button fx:id="submitChangeBtn" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionAddAppointment" onMouseEntered="#addAptOnMouseEnter" prefHeight="25.0" prefWidth="150.0" text="Add Appointment" />
+                        <Button fx:id="modifyAptBtn" layoutX="204.0" layoutY="26.0" mnemonicParsing="false" onAction="#onActionModifyApt" onMouseEntered="#modifyAptOnMouseEnter" text="Submit Modify Appointment" />
+                        <Text fx:id="addModifyAptHelperTxt" layoutX="14.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children></Pane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
@@ -156,46 +157,9 @@
             </GridPane>
          </children>
       </GridPane>
-      <Pane layoutX="29.0" layoutY="78.0" prefHeight="519.0" prefWidth="1569.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="78.0">
+      <Pane layoutX="74.0" layoutY="72.0" prefHeight="313.0" prefWidth="1481.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="72.0">
          <children>
-            <HBox fillHeight="false" layoutX="452.0" layoutY="460.0" prefHeight="30.0" prefWidth="539.0">
-               <children>
-                  <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" prefHeight="25.0" prefWidth="92.0" text="Clear Form" />
-                  <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" text="Reports">
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
-                  </Button>
-               <Button fx:id="customersBtn" mnemonicParsing="false" onAction="#onActionCustomers" text="Customers">
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
-               </Button>
-               <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" prefHeight="25.0" prefWidth="101.0" text="Exit Application">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </HBox.margin>
-               </Button>
-               </children>
-            </HBox>
-            <VBox layoutX="1003.0" layoutY="431.0" prefHeight="88.0" prefWidth="196.0">
-               <children>
-               <RadioButton fx:id="apptByMonthRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" prefHeight="19.0" prefWidth="181.0" text="View Appointments by Month">
-                  <padding>
-                     <Insets top="20.0" />
-                  </padding>
-               </RadioButton>
-               <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" text="View Appoints by Week">
-                  <padding>
-                     <Insets top="20.0" />
-                  </padding>
-               </RadioButton>
-               </children>
-            </VBox>
-            <TableView fx:id="appointmentTableView" layoutX="131.0" layoutY="61.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="370.0" prefWidth="1307.0">
+            <TableView fx:id="appointmentTableView" layoutX="87.0" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="262.0" prefWidth="1307.0">
                <columns>
                   <TableColumn fx:id="appointmentIDCol" maxWidth="1.7976931348623157E308" prefWidth="150.0" text="Appointment ID" />
                   <TableColumn fx:id="appointmentTitleCol" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Title" />
@@ -209,8 +173,59 @@
                   <TableColumn fx:id="appointmentUserCol" maxWidth="1.7976931348623157E308" prefWidth="127.0" text="User" />
                </columns>
             </TableView>
-            <Button fx:id="deleteAptBtn" layoutX="1270.0" layoutY="463.0" mnemonicParsing="false" onAction="#onActionDeleteAppointment" text="Delete Appointment" />
          </children>
       </Pane>
+      <HBox layoutX="180.0" layoutY="394.0" prefHeight="41.0" prefWidth="1269.0">
+         <children>
+            <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" onMouseEntered="#clearFormOnMouseEnter" prefHeight="25.0" prefWidth="92.0" text="Clear Form" />
+            <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" onMouseEntered="#reportsOnMouseEnter" text="Reports">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Button>
+         <Button fx:id="customersBtn" mnemonicParsing="false" onAction="#onActionCustomers" onMouseEntered="#customersOnMouseEnter" text="Customers">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+         </Button>
+         <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" onMouseEntered="#exitOnMouseEnter" prefHeight="25.0" prefWidth="101.0" text="Exit Application">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin>
+         </Button>
+         <RadioButton fx:id="apptByMonthRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" onMouseEntered="#aptByMonthOnMouseEnter" prefHeight="24.0" prefWidth="181.0" text="View Appointments by Month">
+            <padding>
+               <Insets top="20.0" />
+            </padding>
+               <toggleGroup>
+                  <ToggleGroup fx:id="sortDate" />
+               </toggleGroup>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+         </RadioButton>
+         <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" onMouseEntered="#aptByWeekOnMouseEnter" text="View Appoints by Week" toggleGroup="$sortDate">
+            <padding>
+               <Insets top="20.0" />
+            </padding>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+         </RadioButton>
+            <RadioButton fx:id="allAppointments" mnemonicParsing="false" onAction="#onActionAllAppointments" onMouseEntered="#allAptsOnMouseEnter" text="View All Appointments" toggleGroup="$sortDate">
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </RadioButton>
+            <Button fx:id="deleteAptBtn" mnemonicParsing="false" onAction="#onActionDeleteAppointment" onMouseEntered="#deleteAptOnMouseEnter" text="Delete Appointment" />
+         </children>
+      </HBox>
+      <Text fx:id="buttonHelperTxt" layoutX="181.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
