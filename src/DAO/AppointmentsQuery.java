@@ -28,6 +28,9 @@ public class AppointmentsQuery {
 
 
     private static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> userAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> customerAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> contactAppointments = FXCollections.observableArrayList();
 
     public static ObservableList<Appointments> populateAppointments() throws SQLException {
 
@@ -78,6 +81,70 @@ public class AppointmentsQuery {
         return rowsAffected;
 
     }
+    public static ObservableList<Appointments> getUserAppointments(int userID) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE User_ID =?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,userID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int appointmentId = rs.getInt("Appointment_ID");
+            String appointmentTitle = rs.getString("Title");
+            String appointmentDesc = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
+            int customerID = rs.getInt("Customer_ID");
+            int user_id = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
+            userAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,appointmentEnd,customerID,user_id,contactID));
+
+        }
+      return userAppointments;
+
+    }
+    public static ObservableList<Appointments> getCustomerAppointments(int customerID) throws SQLException{
+        String sql = "SELECT * FROM appointments WHERE Customer_ID =?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,customerID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int appointmentId = rs.getInt("Appointment_ID");
+            String appointmentTitle = rs.getString("Title");
+            String appointmentDesc = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
+            int customer_id = rs.getInt("Customer_ID");
+            int user_id = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
+            customerAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,appointmentEnd,customer_id,user_id,contactID));
+
+        }
+        return customerAppointments;
+    }
+    public static ObservableList<Appointments> getContactAppointments(int contactID) throws SQLException{
+        String sql = "SELECT * FROM appointments WHERE Customer_ID =?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,contactID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int appointmentId = rs.getInt("Appointment_ID");
+            String appointmentTitle = rs.getString("Title");
+            String appointmentDesc = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
+            int customerID = rs.getInt("Customer_ID");
+            int userID = rs.getInt("User_ID");
+            int contact_id = rs.getInt("Contact_ID");
+            contactAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,appointmentEnd,customerID,userID,contact_id));
+        }
+        return contactAppointments;
+    }
+
     public static int updateAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID, int Apt_ID) throws SQLException {
         String sql = "UPDATE appointments SET Title = ?, Description = ?, Location=?, Type= ?, Start =?, End =?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

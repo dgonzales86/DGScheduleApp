@@ -2,6 +2,8 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import model.Appointments;
 import model.User;
 
 import java.sql.PreparedStatement;
@@ -15,6 +17,8 @@ public class UserQuery {
     // COLUMN_USER_PASSWORD ="Password"
 
 public static ObservableList<User> allUsers = FXCollections.observableArrayList();
+
+
 
 
 public static ObservableList<User> populateUsers() throws SQLException {
@@ -31,6 +35,8 @@ public static ObservableList<User> populateUsers() throws SQLException {
     }
    return allUsers;
 }
+
+
 
     public static int insertUser(String User_Name, String Password) throws SQLException {
         String sql = "INSERT INTO users (User_Name,Password) VALUES(?,?)";
