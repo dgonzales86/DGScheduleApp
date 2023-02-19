@@ -118,43 +118,65 @@ public class DisplayScheduleController implements Initializable {
 
 
     public void allAptsOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to view All Appointments (Default View)");
     }
 
     public void deleteAptOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to cancel an existing appointment");
     }
 
     public void aptByWeekOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to view most recent weeks appointments");
     }
 
     public void aptByMonthOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to view current month's appointments");
     }
 
     public void exitOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to exit application");
     }
 
     public void customersOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to add or modify customers");
     }
 
     public void reportsOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to view reports");
     }
 
     public void clearFormOnMouseEnter(MouseEvent mouseEvent) {
+        buttonHelperTxt.setText("Select to clear form prior to adding a new appointment");
     }
 
     public void modifyAptOnMouseEnter(MouseEvent mouseEvent) {
+        addModifyAptHelperTxt.setText("Select when ready to save modifications to appointment");
     }
 
     public void addAptOnMouseEnter(MouseEvent mouseEvent) {
+        addModifyAptHelperTxt.setText("Select to save appointment. no fields are blank");
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
+        if (aptIdTxtField.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You must first select an appointment to cancel!");
+            alert.setResizable(true);
+            alert.showAndWait();
+        } else {
+            String title = aptTitleTxtField.getText();
+            int aptID = Integer.parseInt(aptIdTxtField.getText());
+            Alert cancelAptConfirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like to cancel this appointment?");
+            cancelAptConfirmation.setResizable(true);
+            Optional<ButtonType> result = cancelAptConfirmation.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                AppointmentsQuery.deleteAppointment(title, aptID);
 
-        String title = aptTitleTxtField.getText();
-        int aptID = Integer.parseInt(aptIdTxtField.getText());
-        AppointmentsQuery.deleteAppointment(title,aptID);
-        refreshAppointmentsTable();
-        appointmentTableView.refresh();
+            }
+            refreshAppointmentsTable();
+            appointmentTableView.refresh();
+            claerForm();
 
+        }
     }
 
     @FXML
@@ -236,53 +258,55 @@ public class DisplayScheduleController implements Initializable {
         AtomicBoolean customerOverlapFound = new AtomicBoolean(false);
         AtomicBoolean contactOverlapFound = new AtomicBoolean(false);
 
-        for(Appointments appointment : AppointmentsQuery.getAllAppointments()) {
-            if (appointment.getUserID() == aptUser) {
-                userOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+        if (appointmentEnd.isAfter(appointmentStart)){
+
+            for(Appointments appointment : AppointmentsQuery.getAllAppointments()) {
+                if (appointment.getUserID() == aptUser) {
+                    userOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+                }
+                if (appointment.getCustomerID() == aptCustomer) {
+                    customerOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+
+                }
+                if (appointment.getContactID() == aptContact) {
+                    contactOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+                }
             }
-            if (appointment.getCustomerID() == aptCustomer) {
-                customerOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+
+            if (userOverlapFound.get() || customerOverlapFound.get() || contactOverlapFound.get()) {
+                if(userOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected user has an existing appointment in this timeframe.\nSelect another user or select another user or change appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
+                if(customerOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected customer has an existing appointment in this timeframe.\nSelect another appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
+                if (contactOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected contact has an existing appointment in this timeframe.\nSelect another contact or change appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
 
             }
-            if (appointment.getContactID() == aptContact) {
-                contactOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                        || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
-            }
-        }
+            AppointmentsQuery.insertAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact);
+            appointmentTableView.refresh();
+            refreshAppointmentsTable();
 
-        if (userOverlapFound.get() || customerOverlapFound.get() || contactOverlapFound.get()) {
-            if(userOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected user has an existing appointment in this timeframe.\nSelect another user or select another user or change appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
-            }
-            if(customerOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected customer has an existing appointment in this timeframe.\nSelect another appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
-            }
-            if (contactOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected contact has an existing appointment in this timeframe.\nSelect another contact or change appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
-            }
         }else {
-            if (appointmentEnd.isAfter(appointmentStart)){
-                AppointmentsQuery.insertAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact);
-                appointmentTableView.refresh();
-                refreshAppointmentsTable();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
-                alert.showAndWait();
-            }
+            Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
+            alert.showAndWait();
         }
     }
 
@@ -325,57 +349,58 @@ public class DisplayScheduleController implements Initializable {
         AtomicBoolean customerOverlapFound = new AtomicBoolean(false);
         AtomicBoolean contactOverlapFound = new AtomicBoolean(false);
 
-        for(Appointments appointment : AppointmentsQuery.getAllAppointments()) {
-            if (appointment.getAppointmentID() != aptID)
-            {
-                if (appointment.getUserID() == aptUser) {
-                    userOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
-                }
-                if (appointment.getCustomerID() == aptCustomer) {
-                    customerOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+        //add check for end time before start time
+        if (appointmentEnd.isAfter(appointmentStart)){
+            for(Appointments appointment : AppointmentsQuery.getAllAppointments()) {
+                if (appointment.getAppointmentID() != aptID)
+                {
+                    if (appointment.getUserID() == aptUser) {
+                        userOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+                    }
+                    if (appointment.getCustomerID() == aptCustomer) {
+                        customerOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
 
+                    }
+                    if (appointment.getContactID() == aptContact) {
+                        contactOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
+                                || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
+                    }
                 }
-                if (appointment.getContactID() == aptContact) {
-                    contactOverlapFound.compareAndSet(false, checkOverlapCond1.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond2.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd)
-                            || checkOverlapCond3.checkForOverlap(appointment.getStart(), appointment.getEnd(), appointmentStart, appointmentEnd));
-                }}
-        }
+            }
 
-        if (userOverlapFound.get() || customerOverlapFound.get() || contactOverlapFound.get()) {
-            if(userOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected user has an existing appointment in this timeframe.\nSelect another user or select another user or change appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
+            if (userOverlapFound.get() || customerOverlapFound.get() || contactOverlapFound.get()) {
+                if(userOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected user has an existing appointment in this timeframe.\nSelect another user or select another user or change appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
+                if(customerOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected customer has an existing appointment in this timeframe.\nSelect another appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
+                if (contactOverlapFound.get()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"The selected contact has an existing appointment in this timeframe.\nSelect another contact or change appointment time!");
+                    alert.setResizable(true);
+                    alert.getDialogPane().setMinWidth(450);
+                    alert.showAndWait();
+                }
             }
-            if(customerOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected customer has an existing appointment in this timeframe.\nSelect another appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
-            }
-            if (contactOverlapFound.get()){
-                Alert alert = new Alert(Alert.AlertType.ERROR,"The selected contact has an existing appointment in this timeframe.\nSelect another contact or change appointment time!");
-                alert.setResizable(true);
-                alert.getDialogPane().setMinWidth(450);
-                alert.showAndWait();
-            }
+            AppointmentsQuery.updateAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact,aptID);
+            refreshAppointmentsTable();
+            appointmentTableView.refresh();
         }else {
-
-            if (appointmentEnd.isAfter(appointmentStart)){
-                AppointmentsQuery.updateAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact,aptID);
-                refreshAppointmentsTable();
-                appointmentTableView.refresh();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
-                alert.showAndWait();
-            }
-        }}
+            Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
+            alert.showAndWait();
+        }
+    }
 
     public void popStartTimeCombo() {
 
@@ -454,25 +479,29 @@ public class DisplayScheduleController implements Initializable {
 
 
     public void onActionClearForm(ActionEvent actionEvent) {
-
-        aptTitleTxtField.setText(null);
-        aptDescTxtField.setText(null);
-        aptLocationTxtField.setText(null);
-        aptTypeTxtField.setText(null);
-        startDatePicker.setValue(null);
-        startTimeCombo.getSelectionModel().clearSelection();
-        endTimeCombo.getSelectionModel().clearSelection();
-        contactComboBox.getSelectionModel().clearSelection();
-        contactComboBox.setValue(null);
-        customerCombo.getSelectionModel().clearSelection();
-        customerCombo.setValue(null);
-        userCombo.getSelectionModel().clearSelection();
-        userCombo.setValue(null);
-        aptIdTxtField.setText(null);
-
+        claerForm();
     }
 
+public void claerForm(){
 
+    aptTitleTxtField.setText(null);
+    aptDescTxtField.setText(null);
+    aptLocationTxtField.setText(null);
+    aptTypeTxtField.setText(null);
+    startDatePicker.setValue(null);
+    startTimeCombo.getSelectionModel().clearSelection();
+    startTimeCombo.setValue(null);
+    endTimeCombo.getSelectionModel().clearSelection();
+    endTimeCombo.setValue(null);
+    contactComboBox.getSelectionModel().clearSelection();
+    contactComboBox.setValue(null);
+    customerCombo.getSelectionModel().clearSelection();
+    customerCombo.setValue(null);
+    userCombo.getSelectionModel().clearSelection();
+    userCombo.setValue(null);
+    aptIdTxtField.setText(null);
+    aptIdTxtField.setText("");
+}
     public void getAppointmentSelection() {
 
         appointmentTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {

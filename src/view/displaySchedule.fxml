@@ -175,9 +175,12 @@
             </TableView>
          </children>
       </Pane>
-      <HBox layoutX="180.0" layoutY="394.0" prefHeight="41.0" prefWidth="1269.0">
+      <HBox layoutX="128.0" layoutY="398.0" prefHeight="42.0" prefWidth="1387.0">
          <children>
-            <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" onMouseEntered="#clearFormOnMouseEnter" prefHeight="25.0" prefWidth="92.0" text="Clear Form" />
+            <Button fx:id="clearFormBtn" mnemonicParsing="false" onAction="#onActionClearForm" onMouseEntered="#clearFormOnMouseEnter" prefHeight="25.0" prefWidth="92.0" text="Clear Form">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin></Button>
             <Button fx:id="reportsBtn" mnemonicParsing="false" onAction="#onActionViewReports" onMouseEntered="#reportsOnMouseEnter" text="Reports">
                <HBox.margin>
                   <Insets left="50.0" />
@@ -188,15 +191,15 @@
                   <Insets left="50.0" />
                </HBox.margin>
          </Button>
-         <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" onMouseEntered="#exitOnMouseEnter" prefHeight="25.0" prefWidth="101.0" text="Exit Application">
+         <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#onActionExit" onMouseEntered="#exitOnMouseEnter" prefHeight="25.0" prefWidth="111.0" text="Exit Application">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <HBox.margin>
-                  <Insets left="50.0" right="50.0" />
+                  <Insets left="50.0" right="30.0" />
                </HBox.margin>
          </Button>
-         <RadioButton fx:id="apptByMonthRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" onMouseEntered="#aptByMonthOnMouseEnter" prefHeight="24.0" prefWidth="181.0" text="View Appointments by Month">
+         <RadioButton fx:id="apptByMonthRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByMonth" onMouseEntered="#aptByMonthOnMouseEnter" prefHeight="39.0" prefWidth="200.0" text="View Appointments by Month">
             <padding>
                <Insets top="20.0" />
             </padding>
@@ -204,15 +207,15 @@
                   <ToggleGroup fx:id="sortDate" />
                </toggleGroup>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="30.0" />
                </HBox.margin>
          </RadioButton>
-         <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" onMouseEntered="#aptByWeekOnMouseEnter" text="View Appoints by Week" toggleGroup="$sortDate">
+         <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" onMouseEntered="#aptByWeekOnMouseEnter" prefHeight="39.0" prefWidth="162.0" text="View Appoints by Week" toggleGroup="$sortDate">
             <padding>
                <Insets top="20.0" />
             </padding>
                <HBox.margin>
-                  <Insets right="50.0" />
+                  <Insets right="30.0" />
                </HBox.margin>
          </RadioButton>
             <RadioButton fx:id="allAppointments" mnemonicParsing="false" onAction="#onActionAllAppointments" onMouseEntered="#allAptsOnMouseEnter" text="View All Appointments" toggleGroup="$sortDate">
@@ -223,9 +226,12 @@
                   <Insets right="50.0" />
                </HBox.margin>
             </RadioButton>
-            <Button fx:id="deleteAptBtn" mnemonicParsing="false" onAction="#onActionDeleteAppointment" onMouseEntered="#deleteAptOnMouseEnter" text="Delete Appointment" />
+            <Button fx:id="deleteAptBtn" mnemonicParsing="false" onAction="#onActionDeleteAppointment" onMouseEntered="#deleteAptOnMouseEnter" text="Cancel Appointment">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
-      <Text fx:id="buttonHelperTxt" layoutX="181.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="buttonHelperTxt" layoutX="187.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

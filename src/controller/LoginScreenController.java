@@ -4,9 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import DAO.DBConnection;
 
@@ -67,7 +70,7 @@ public class LoginScreenController implements Initializable
             }
             if(rowCount == 1){
 
-            //JOptionPane.showMessageDialog(null,"Welcome!");
+                //JOptionPane.showMessageDialog(null,"Welcome!");
                 try {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
@@ -98,14 +101,67 @@ public class LoginScreenController implements Initializable
     }
     // See about changing following function into a lambda...
     // Localizes login screen to either English of French.
-    public void setRB(){
+
+    public void ENTER(KeyEvent keyEvent) {
+        if (keyEvent.getCode().toString().equals("ENTER")) {
+
+            try {
+
+                String userName = String.valueOf(userNameTextBox.getText());
+                String userPassword = String.valueOf(userPasswordTextBox.getText());
+
+                System.out.println(userName + userPassword);
+
+                // Raw SQL
+                String sql = "select * from users where User_Name='" + userName + "' and Password='" + userPassword + "'";
+                PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                int rowCount = 0;
+                while (rs.next()) {
+                    rowCount++;
+                }
+                if (rowCount == 1) {
+
+                    //JOptionPane.showMessageDialog(null,"Welcome!");
+                    try {
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
+                        Parent root = loader.load();
+                        stage = (Stage) ((Node) keyEvent.getSource()).getScene().getWindow();
+                        Parent scene = loader.getRoot();
+                        stage.setScene(new Scene(scene));
+                        stage.show();
+
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                        e.getMessage();
+                    }
+
+                } else if (rowCount == 0) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle(rb.getString("InvalidLoginTitle"));
+                    alert.setContentText(rb.getString("InvalidLoginMessage"));
+                    alert.getButtonTypes().set(0, ButtonType.OK);
+                    alert.setResizable(true);
+                    alert.showAndWait();
+                }
+
+            } catch (NullPointerException | IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void setRB () {
 
 
-        if(Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
+        if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
             userNameLbl.setText(rb.getString("userNameLbl"));
-            userPasswordLbl.setText(rb.getString("userPasswordLbl"));
-            logInBtn.setText(rb.getString("logInBtn"));
-            titleLbl.setText(rb.getString("titleLbl"));
+        userPasswordLbl.setText(rb.getString("userPasswordLbl"));
+        logInBtn.setText(rb.getString("logInBtn"));
+        titleLbl.setText(rb.getString("titleLbl"));
 
     }
 
@@ -119,6 +175,5 @@ public class LoginScreenController implements Initializable
 
 
     }
-
 
 }
