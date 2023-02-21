@@ -172,9 +172,13 @@ public class DisplayScheduleController implements Initializable {
                 AppointmentsQuery.deleteAppointment(title, aptID);
 
             }
+            String aptTitle = aptTitleTxtField.getText();
             refreshAppointmentsTable();
             appointmentTableView.refresh();
             claerForm();
+            Alert cancelConfirmation = new Alert(Alert.AlertType.INFORMATION, "Appointment:  #" + aptID + " " + aptTitle + ", has been canceled!");
+            cancelConfirmation.setResizable(true);
+            cancelConfirmation.showAndWait();
 
         }
     }
@@ -550,6 +554,14 @@ public void claerForm(){
 
             }
         });
+    }
+
+    public void upcomingApt(){
+        for(Appointments appointments : ){
+            if (appointmentStart.isAfter(LocalDateTime.now().minusMinutes(1)) && appointmentStart.isBefore(LocalDateTime.now().plusMinutes(15))){
+
+            }
+        }
     }
 
 
