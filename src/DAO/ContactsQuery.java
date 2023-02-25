@@ -57,21 +57,4 @@ public class ContactsQuery {
         return sortedContacts;
     }
 
-    public static int insertContacts(){
-
-        return 1;
-
-    }
-    public static int updateContacts(){
-
-        return 1;
-
-    }
-    public static int deleteContacts(){
-
-        return 1;
-
-    }
-
-
 }

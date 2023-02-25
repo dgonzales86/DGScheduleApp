@@ -8,7 +8,6 @@ public class Countries {
     public Countries(int countryID, String country) {
         this.countryID = countryID;
         this.country = country;
-
     }
 
     @Override
@@ -30,6 +29,4 @@ public class Countries {
     public void setCountry(String country) {
         this.country = country;
     }
-
-
 }

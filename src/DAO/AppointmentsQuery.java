@@ -31,26 +31,26 @@ public class AppointmentsQuery {
 
     public static ObservableList<Appointments> populateAppointments() throws SQLException {
 
-            String sql = "SELECT * FROM appointments";
+        String sql = "SELECT * FROM appointments";
 
-            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-                while(rs.next()) {
-                    int appointmentId = rs.getInt("Appointment_ID");
-                    String appointmentTitle = rs.getString("Title");
-                    String appointmentDesc = rs.getString("Description");
-                    String appointmentLocation = rs.getString("Location");
-                    String appointmentType = rs.getString("Type");
-                    LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
-                    LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
-                    int customerID = rs.getInt("Customer_ID");
-                    int userID = rs.getInt("User_ID");
-                    int contactID = rs.getInt("Contact_ID");
-                    allAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,
-                                            appointmentEnd,customerID,userID,contactID));
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            int appointmentId = rs.getInt("Appointment_ID");
+            String appointmentTitle = rs.getString("Title");
+            String appointmentDesc = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            String appointmentType = rs.getString("Type");
+            LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
+            int customerID = rs.getInt("Customer_ID");
+            int userID = rs.getInt("User_ID");
+            int contactID = rs.getInt("Contact_ID");
+            allAppointments.add(new Appointments(appointmentId,appointmentTitle,appointmentDesc,appointmentLocation,appointmentType,appointmentStart,
+                    appointmentEnd,customerID,userID,contactID));
 
 
-    }
+        }
         return allAppointments;
     }
 

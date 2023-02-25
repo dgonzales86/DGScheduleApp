@@ -22,23 +22,21 @@ public class DBConnection {
 
 
     public static void dbConnect(){
-    try{
+        try{
 
-        connection = DriverManager.getConnection(db_URL,userName,userPassword);
-        Statement statement = connection.createStatement();
-        System.out.println("Connection Opened");
+            connection = DriverManager.getConnection(db_URL,userName,userPassword);
+            Statement statement = connection.createStatement();
+            System.out.println("Connection Opened");
 
-    }catch (SQLException se){
-
-//        System.out.println("Something didn't go quite right: " + se.getMessage());
-        se.printStackTrace();
-
+        }catch (SQLException se){
+            System.out.println("Something didn't go quite right: " + se.getMessage());
+            se.printStackTrace();
+        }
     }
-}
 
-public static Connection getConnection(){
+    public static Connection getConnection(){
         return connection;
-}
+    }
 
     public static void closeConnection(){
         try {

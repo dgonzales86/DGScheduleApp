@@ -6,6 +6,7 @@ import DAO.ContactsQuery;
 import DAO.CustomersQuery;
 import DAO.UserQuery;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -154,7 +155,7 @@ public class DisplayScheduleController implements Initializable {
     }
 
     public void addAptOnMouseEnter(MouseEvent mouseEvent) {
-        addModifyAptHelperTxt.setText("Select to save appointment. no fields are blank");
+        addModifyAptHelperTxt.setText("Select to save appointment. No fields may be empty!");
     }
 
     public void onActionDeleteAppointment(ActionEvent actionEvent) throws SQLException {
@@ -171,15 +172,15 @@ public class DisplayScheduleController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK){
                 AppointmentsQuery.deleteAppointment(title, aptID);
 
-            }
-            String aptTitle = aptTitleTxtField.getText();
-            refreshAppointmentsTable();
-            appointmentTableView.refresh();
-            claerForm();
-            Alert cancelConfirmation = new Alert(Alert.AlertType.INFORMATION, "Appointment:  #" + aptID + " " + aptTitle + ", has been canceled!");
-            cancelConfirmation.setResizable(true);
-            cancelConfirmation.showAndWait();
+                String aptTitle = aptTitleTxtField.getText();
+                refreshAppointmentsTable();
+                appointmentTableView.refresh();
+                clearForm();
+                Alert cancelConfirmation = new Alert(Alert.AlertType.INFORMATION, "Appointment:  #" + aptID + " " + aptTitle + ", has been canceled!");
+                cancelConfirmation.setResizable(true);
+                cancelConfirmation.showAndWait();
 
+            }else {return;}
         }
     }
 
@@ -221,17 +222,26 @@ public class DisplayScheduleController implements Initializable {
     }
     @FXML
     void onActionViewApptsByMonth(ActionEvent event) {
+        filterAptByMonth();
 
     }
 
     @FXML
     void onActionViewApptsByWeek(ActionEvent event) {
+        filterAptByWeek();
 
     }
     public void onActionAllAppointments(ActionEvent actionEvent) {
+        refreshAppointmentsTable();
     }
 
-    public void onActionViewReports(ActionEvent actionEvent) {
+    public void onActionViewReports(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reports.fxml"));
+        Parent root = loader.load();
+        stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     CheckForOverlapApt checkOverlapCond1 = (LocalDateTime start1,LocalDateTime end1,LocalDateTime start2,LocalDateTime end2) -> ((start2.isAfter(start1) || start2.isEqual(start1)) && (start2.isBefore(end1)));
@@ -316,6 +326,10 @@ public class DisplayScheduleController implements Initializable {
                     AppointmentsQuery.insertAppointment(aptTitle, aptDesc, aptLoc, aptType, appointmentStart, appointmentEnd, aptCustomer, aptUser, aptContact);
                     appointmentTableView.refresh();
                     refreshAppointmentsTable();
+                    clearRadioBtnSelection(sortDate);
+                    clearForm();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION,"Appointment added successfully!");
+                    alert.show();
                 }
 
             } else {
@@ -415,6 +429,11 @@ public class DisplayScheduleController implements Initializable {
             AppointmentsQuery.updateAppointment(aptTitle,aptDesc,aptLoc,aptType,appointmentStart,appointmentEnd,aptCustomer,aptUser,aptContact,aptID);
             refreshAppointmentsTable();
             appointmentTableView.refresh();
+            clearRadioBtnSelection(sortDate);
+            clearForm();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"Appointment" + aptID + " successfully modified!");
+            alert.show();
+
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING,"End time cannot be before start time!");
             alert.showAndWait();
@@ -498,29 +517,29 @@ public class DisplayScheduleController implements Initializable {
 
 
     public void onActionClearForm(ActionEvent actionEvent) {
-        claerForm();
+        clearForm();
     }
 
-public void claerForm(){
+    public void clearForm(){
 
-    aptTitleTxtField.setText(null);
-    aptDescTxtField.setText(null);
-    aptLocationTxtField.setText(null);
-    aptTypeTxtField.setText(null);
-    startDatePicker.setValue(null);
-    startTimeCombo.getSelectionModel().clearSelection();
-    startTimeCombo.setValue(null);
-    endTimeCombo.getSelectionModel().clearSelection();
-    endTimeCombo.setValue(null);
-    contactComboBox.getSelectionModel().clearSelection();
-    contactComboBox.setValue(null);
-    customerCombo.getSelectionModel().clearSelection();
-    customerCombo.setValue(null);
-    userCombo.getSelectionModel().clearSelection();
-    userCombo.setValue(null);
-    aptIdTxtField.setText(null);
-    aptIdTxtField.setText("");
-}
+        aptTitleTxtField.setText(null);
+        aptDescTxtField.setText(null);
+        aptLocationTxtField.setText(null);
+        aptTypeTxtField.setText(null);
+        startDatePicker.setValue(null);
+        startTimeCombo.getSelectionModel().clearSelection();
+        startTimeCombo.setValue(null);
+        endTimeCombo.getSelectionModel().clearSelection();
+        endTimeCombo.setValue(null);
+        contactComboBox.getSelectionModel().clearSelection();
+        contactComboBox.setValue(null);
+        customerCombo.getSelectionModel().clearSelection();
+        customerCombo.setValue(null);
+        userCombo.getSelectionModel().clearSelection();
+        userCombo.setValue(null);
+        aptIdTxtField.setText(null);
+        aptIdTxtField.setText("");
+    }
     public void getAppointmentSelection() {
 
         appointmentTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -556,14 +575,87 @@ public void claerForm(){
         });
     }
 
-    public void upcomingApt(){
-        for(Appointments appointments : ){
-            if (appointmentStart.isAfter(LocalDateTime.now().minusMinutes(1)) && appointmentStart.isBefore(LocalDateTime.now().plusMinutes(15))){
+    public void upcomingApt() {
+        if (DAO.AppointmentsQuery.getAllAppointments().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no upcoming appointments!");
+            alert.showAndWait();
+        } else {
+            for (Appointments appointments : DAO.AppointmentsQuery.getAllAppointments()) {
+                if (appointments.getStart().isAfter(LocalDateTime.now().minusMinutes(1)) && appointments.getStart().isBefore(LocalDateTime.now().plusMinutes(16))) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "There is an upcoming appointment within 15 minutes!");
+                    alert.showAndWait();
+                    break;
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no upcoming appointments!");
+                    alert.showAndWait();
+                    break;
+                }
+            }
+        }
+    }
+    public void filterAptByMonth(){
+        refreshAppointmentsTable();
+        ObservableList<Appointments> filteredAppointmentsByMonth = FXCollections.observableArrayList();
+        if (DAO.AppointmentsQuery.getAllAppointments().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"There are no existing appointments!");
+        }else {
+            for (Appointments appointments: AppointmentsQuery.getAllAppointments()){
+                if(appointments.getStart().getMonth() == LocalDateTime.now().getMonth()){
 
+
+
+                    filteredAppointmentsByMonth.add(appointments);
+
+                    appointmentTableView.setItems(filteredAppointmentsByMonth);
+                    appointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+                    appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+                    appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDesc"));
+                    appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+                    appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+                    appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+                    appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+                    appointmentCustomerCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+                    appointmentUserCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+                    appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+                    appointmentTableView.refresh();
+                }
             }
         }
     }
 
+    public void filterAptByWeek(){
+        refreshAppointmentsTable();
+        ObservableList<Appointments> filteredAppointmentsByWeek = FXCollections.observableArrayList();
+        if (DAO.AppointmentsQuery.getAllAppointments().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"There are no existing appointments!");
+        }else {
+            for (Appointments appointments: AppointmentsQuery.getAllAppointments()){
+                if(appointments.getStart().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() || appointments.getStart().isBefore(LocalDateTime.now().plusDays(7))){
+
+
+                    filteredAppointmentsByWeek.add(appointments);
+                    appointmentTableView.setItems(filteredAppointmentsByWeek);
+                    appointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+                    appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+                    appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDesc"));
+                    appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+                    appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+                    appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+                    appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+                    appointmentCustomerCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+                    appointmentUserCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+                    appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+
+                    appointmentTableView.refresh();
+                }
+            }
+        }
+    }
+    public void clearRadioBtnSelection(ToggleGroup sortDate) {
+        if (sortDate.getSelectedToggle() != null) {
+            sortDate.getSelectedToggle().setSelected(false);
+        }
+    }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -577,8 +669,8 @@ public void claerForm(){
         popStartTimeCombo();
         popEndTimeCombo();
         aptIdTxtField.setDisable(true);
-        claerForm();
-
+        clearForm();
+        upcomingApt();
 
     }
 

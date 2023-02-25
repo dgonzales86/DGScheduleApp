@@ -8,10 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import DAO.DBConnection;
+import util.UserLog;
 
 import java.io.IOException;
 import java.net.URL;
@@ -72,7 +72,7 @@ public class LoginScreenController implements Initializable
 
                 //JOptionPane.showMessageDialog(null,"Welcome!");
                 try {
-
+                    UserLog.sucessfulLoginActivity(userNameTextBox.getText().toString());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
                     Parent root = loader.load();
                     stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -83,9 +83,11 @@ public class LoginScreenController implements Initializable
                 }catch (IllegalStateException e){
                     e.printStackTrace();
                     e.getMessage();
+
                 }
 
             }else if (rowCount == 0){
+                UserLog.attemptedLoginActivity(userNameTextBox.getText().toString());
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(rb.getString("InvalidLoginTitle"));
                 alert.setContentText(rb.getString("InvalidLoginMessage"));
@@ -124,7 +126,7 @@ public class LoginScreenController implements Initializable
 
                     //JOptionPane.showMessageDialog(null,"Welcome!");
                     try {
-
+                        UserLog.sucessfulLoginActivity(userNameTextBox.getText());
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
                         Parent root = loader.load();
                         stage = (Stage) ((Node) keyEvent.getSource()).getScene().getWindow();
@@ -138,6 +140,7 @@ public class LoginScreenController implements Initializable
                     }
 
                 } else if (rowCount == 0) {
+                    UserLog.attemptedLoginActivity(userNameTextBox.getText());
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle(rb.getString("InvalidLoginTitle"));
                     alert.setContentText(rb.getString("InvalidLoginMessage"));

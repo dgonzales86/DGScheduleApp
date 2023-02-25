@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.Reports"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1150.0" style="-fx-border-radius: 10;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
+   <children>
+      <VBox layoutX="111.0" layoutY="419.0" prefHeight="221.0" prefWidth="430.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="419.0">
+         <children>
+            <AnchorPane prefHeight="215.0" prefWidth="428.0">
+               <children>
+                  <Label layoutX="7.0" layoutY="14.0" prefHeight="17.0" prefWidth="413.0" text="Select an appointment type and month to view total customer appointments" />
+                  <Button fx:id="reportOneBtn" layoutX="269.0" layoutY="176.0" mnemonicParsing="false" onAction="#onActionReportOne" prefHeight="25.0" prefWidth="125.0" text="Generate report" />
+                  <HBox layoutX="33.0" layoutY="134.0" prefHeight="25.0" prefWidth="361.0">
+                     <children>
+                        <ComboBox fx:id="aptTypeCombo" prefHeight="25.0" prefWidth="183.0" promptText="Select a type">
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="aptMonthCombo" prefHeight="25.0" prefWidth="125.0" promptText="Select a month" />
+                     </children>
+                  </HBox>
+                  <Text fx:id="totalCustomerAptsTxt" layoutX="71.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <Button fx:id="navigateBackBtn" layoutX="518.0" layoutY="669.0" mnemonicParsing="false" onAction="#onActionNavigateBack" text="Return to schedule" />
+      <Text layoutX="494.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+      <VBox layoutX="611.0" layoutY="419.0" prefHeight="221.0" prefWidth="430.0" style="-fx-border-style: solid; -fx-border-radius: 10;" AnchorPane.topAnchor="419.0">
+         <children>
+            <AnchorPane prefHeight="208.0" prefWidth="428.0">
+               <children>
+                  <Button fx:id="reportsThreeBtn" layoutX="281.0" layoutY="175.0" mnemonicParsing="false" onAction="#onActionReportThree" prefHeight="25.0" prefWidth="125.0" text="Generate report" />
+                  <Label layoutX="156.0" layoutY="14.0" prefHeight="20.0" prefWidth="125.0" text="View all available users" />
+                  <Text fx:id="userCountReportTxt" layoutX="154.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <AnchorPane layoutX="91.0" layoutY="80.0" prefHeight="325.0" prefWidth="969.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
+         <children>
+            <TableView fx:id="reportsTableview" layoutX="20.0" layoutY="38.0" prefHeight="237.0" prefWidth="930.0" AnchorPane.topAnchor="38.0">
+              <columns>
+                  <TableColumn fx:id="aptIdColumn" prefWidth="98.66677856445312" text="Appointment ID" />
+                  <TableColumn fx:id="aptTitleColumn" prefWidth="212.0" text="Title" />
+                  <TableColumn fx:id="aptTypeColumn" prefWidth="112.666748046875" text="Type" />
+                <TableColumn fx:id="aptDescColumn" prefWidth="101.333251953125" text="Description" />
+                <TableColumn fx:id="aptStartColumn" prefWidth="150.0" text="Start" />
+                  <TableColumn fx:id="aptEndColumn" prefWidth="150.0" text="End" />
+                  <TableColumn fx:id="aptcusIdColumn" prefWidth="120.0" text="Customer ID" />
+              </columns>
+            </TableView>
+            <ComboBox fx:id="contactCombo" layoutX="807.0" layoutY="286.0" onAction="#onActionViewSchedule" prefHeight="25.0" prefWidth="143.0" promptText="Choose a contact" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

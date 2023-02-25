@@ -7,12 +7,7 @@ public class Customers {
     private String customerPostalCode;
     private String customerPhone;
     private int customerDivID;
-
-
-
     private String customerDiv;
-
-
 
     public Customers(int customerID, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivID, String customerDiv) {
         this.customerID = customerID;
@@ -23,10 +18,9 @@ public class Customers {
         this.customerDivID = customerDivID;
         this.customerDiv = customerDiv;
     }
-
     @Override
     public String toString() {
-        return (customerName + " " + customerID);
+        return (customerName);
     }
 
     public int getCustomerID() {

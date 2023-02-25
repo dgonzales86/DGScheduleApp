@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
+<AnchorPane prefHeight="350.0" prefWidth="500.0" style="-fx-border-radius: 10;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <children>
       <Label fx:id="titleLbl" layoutX="88.0" layoutY="31.0" prefHeight="55.0" prefWidth="325.0">
          <font>

@@ -1,19 +1,8 @@
 package model;
 
-
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.time.LocalDateTime;
 
-
-/**
- * Appointments Class
- */
 public class Appointments{
-
-
     private int appointmentID;
     private String appointmentTitle;
     private String appointmentDesc;
@@ -25,20 +14,6 @@ public class Appointments{
     private int userID;
     private int contactID;
 
-
-
-    /**
-     * Appointments constructor
-     * @param appointmentTitle
-     * @param appointmentDesc
-     * @param appointmentLocation
-     * @param appointmentType
-     * @param start
-     * @param end
-     * @param customerID
-     * @param userID
-     * @param contactID
-     */
     public Appointments(int appointmentID, String appointmentTitle, String appointmentDesc, String appointmentLocation, String appointmentType,
                         LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) {
         this.appointmentID = appointmentID;
@@ -51,11 +26,7 @@ public class Appointments{
         this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
-
-
     }
-
-
     public int getAppointmentID() {
         return appointmentID;
     }

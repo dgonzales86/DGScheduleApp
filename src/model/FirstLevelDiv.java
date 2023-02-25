@@ -1,7 +1,6 @@
 package model;
 
 public class FirstLevelDiv {
-
     private int divisionID;
     private String division;
     private int countryID;

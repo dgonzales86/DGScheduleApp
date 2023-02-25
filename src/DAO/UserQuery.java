@@ -2,42 +2,39 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import model.Appointments;
 import model.User;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserQuery {
-    // TABLE_USERS = "users"
-    // COLUMN_USER_ID = "User_ID"
-    // COLUMN_USER_NAME = "User_Name"
-    // COLUMN_USER_PASSWORD ="Password"
 
-public static ObservableList<User> allUsers = FXCollections.observableArrayList();
+    public static ObservableList<User> allUsers = FXCollections.observableArrayList();
 
-
-
-
-public static ObservableList<User> populateUsers() throws SQLException {
-    if (allUsers.size() == 0){
-        String sql = "SELECT * FROM users";
+    public static ObservableList<User> populateUsers() throws SQLException {
+        if (allUsers.size() == 0){
+            String sql = "SELECT * FROM users";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int userID = rs.getInt("User_ID");
+                String userName = rs.getString("User_Name");
+                String userPass = rs.getString("Password");
+                allUsers.add(new User(userID,userName,userPass));
+            }
+        }
+        return allUsers;
+    }
+    public static int userCount() throws SQLException {
+        int count = 0;
+        String sql = "SELECT count(User_Name) FROM users";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()){
-            int userID = rs.getInt("User_ID");
-            String userName = rs.getString("User_Name");
-            String userPass = rs.getString("Password");
-            allUsers.add(new User(userID,userName,userPass));
+        if (rs.next()){
+            count = rs.getInt(1);
         }
+        return count;
     }
-   return allUsers;
-}
-
-
-
     public static int insertUser(String User_Name, String Password) throws SQLException {
         String sql = "INSERT INTO users (User_Name,Password) VALUES(?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

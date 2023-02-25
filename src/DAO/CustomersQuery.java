@@ -9,15 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomersQuery {
-
-    // TABLE_CUSTOMERS = "Customers";
-    // COLUMN_CUSTOMER_ID = "Customer_ID";
-    // COLUMN_CUSTOMER_NAME = "Customer_Name";
-    // COLUMN_CUSTOMER_ADDRESS = "Address";
-    // COLUMN_CUSTOMER_PHONE = "Phone"
-    // COLUMN_CUSTOMER_POSTAL_CODE = "Postal_Code";
-    // COLUMN_CUSTOMER_DIVISION_ID = "Division_ID";
-
     private static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
     public static ObservableList<Customers> populateCustomers() throws SQLException{
@@ -25,24 +16,23 @@ public class CustomersQuery {
 
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                int customerID = rs.getInt("Customer_ID");
-                String customerName = rs.getString("Customer_Name");
-                String customerAddress = rs.getString("Address");
-                String customerPhone = rs.getString("Phone" );
-                String customerPostalCode = rs.getString("Postal_Code");
-                int customerDivId = rs.getInt("Division_ID");
-                String customerDiv = rs.getString("Division");
-                allCustomers.add(new Customers(customerID,customerName,customerAddress,customerPostalCode,customerPhone,customerDivId,customerDiv));
+        while (rs.next()){
+            int customerID = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+            String customerAddress = rs.getString("Address");
+            String customerPhone = rs.getString("Phone" );
+            String customerPostalCode = rs.getString("Postal_Code");
+            int customerDivId = rs.getInt("Division_ID");
+            String customerDiv = rs.getString("Division");
+            allCustomers.add(new Customers(customerID,customerName,customerAddress,customerPostalCode,customerPhone,customerDivId,customerDiv));
 
-            }
-            return allCustomers;
+        }
+        return allCustomers;
     }
 
     public static ObservableList<Customers> getAllCustomers(){
         return allCustomers;
     }
-
 
     public static int insertCustomer(String Customer_Name, String Address, String Phone, String Postal_Code, int Division_ID) throws SQLException {
         String sql = "INSERT INTO Customers (Customer_Name,Address,Phone,Postal_Code,Division_ID) VALUES(?,?,?,?,?)";
@@ -57,6 +47,20 @@ public class CustomersQuery {
             System.out.println("Insert Sucessful!");
         }else System.out.println("Insert Failed!");
         return rowsAffected;
+    }
+
+    public static int countAppointments(String aptType, String monthName) throws SQLException {
+        String sql = "SELECT count(*) FROM  appointments WHERE Type=? AND monthname(Start) =? ";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1,aptType);
+        ps.setString(2,monthName);
+        int count = 0;
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            count= rs.getInt(1);
+        }
+        return count;
+
     }
 
     public static Customers getCustomer(int customerID) throws SQLException {
@@ -75,7 +79,6 @@ public class CustomersQuery {
             return new Customers(cusID,cusName,cusAddress,cusPostalCode,cusPhone,cusDivId,null);
         }
         return null;
-
 
     }
 
@@ -123,11 +126,6 @@ public class CustomersQuery {
             System.out.print(customerAddress + " | ");
             System.out.print(customerPostalCode + " | ");
             System.out.print(customerDivisionID + "\n");
-
-
-
         }
     }
-
-
 }
