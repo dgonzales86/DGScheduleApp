@@ -800,7 +800,7 @@ public class DisplayScheduleController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"There are no existing appointments!");
         }else {
             for (Appointments appointments: AppointmentsQuery.getAllAppointments()){
-                if((appointments.getStart().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() || appointments.getStart().isBefore(LocalDateTime.now().plusDays(7)))
+                if((appointments.getStart().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() && appointments.getStart().isBefore(LocalDateTime.now().plusDays(7)))
                         && (appointments.getStart().isAfter(LocalDateTime.now().minusYears(1)) && appointments.getStart().isBefore(LocalDateTime.now()))){
 
                     filteredAppointmentsByWeek.add(appointments);
