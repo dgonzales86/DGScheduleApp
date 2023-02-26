@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * ContactsQuery Class
+ */
 public class ContactsQuery {
 
 //    TABLE_CONTACTS = "Contacts";
@@ -19,7 +22,11 @@ public class ContactsQuery {
     private static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
     private static ObservableList<Contacts> sortedContacts = FXCollections.observableArrayList();
 
-
+    /**
+     * Queries database for contacts and populates an ObservableList with returned data.
+     * @return returns allContacts ObservableList
+     * @throws SQLException
+     */
     public static ObservableList<Contacts> populateContacts() throws SQLException{
         if (allContacts.size() == 0){
             String sql = "SELECT * FROM Contacts";
@@ -35,10 +42,21 @@ public class ContactsQuery {
         }
         return allContacts;
     }
+
+    /**
+     * Getter for allContacts ObservableList
+     * @return returns allContacts
+     */
     public static ObservableList<Contacts>getAllContacts(){
         return allContacts;
     }
 
+    /**
+     * Queries database for all appointments that match the contactID
+     * @param contactID represents contactID in database
+     * @return null
+     * @throws SQLException via database query
+     */
     public static Contacts getContact(int contactID) throws SQLException {
         String sql = "SELECT * FROM Contacts WHERE Contact_ID =?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -51,10 +69,6 @@ public class ContactsQuery {
             return  new Contacts(contactID,contactName,contactEmail);
         }
         return null;
-    }
-
-    public static ObservableList<Contacts> getAllSortedContacts(){
-        return sortedContacts;
     }
 
 }

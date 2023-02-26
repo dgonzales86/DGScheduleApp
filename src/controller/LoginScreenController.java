@@ -20,6 +20,9 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * LoginScreenController Class
+ */
 public class LoginScreenController implements Initializable
 {
 
@@ -49,7 +52,12 @@ public class LoginScreenController implements Initializable
 
     private ResourceBundle rb = ResourceBundle.getBundle("resourceBundle/LoginScreen");
 
-
+    /**
+     * Queries database for a username and password match. If a match is found, the login is successful and the
+     * application navigates to the schedule screen.
+     * @param event - "Login" Button
+     * @throws SQLException directly via SQL query
+     */
     @FXML
     void onActionLogIn(ActionEvent event) throws SQLException {
 
@@ -72,7 +80,7 @@ public class LoginScreenController implements Initializable
 
                 //JOptionPane.showMessageDialog(null,"Welcome!");
                 try {
-                    UserLog.sucessfulLoginActivity(userNameTextBox.getText().toString());
+                    UserLog.successfulLoginActivity(userNameTextBox.getText().toString());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
                     Parent root = loader.load();
                     stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -101,9 +109,13 @@ public class LoginScreenController implements Initializable
             System.out.println(e.getMessage());
         }
     }
-    // See about changing following function into a lambda...
-    // Localizes login screen to either English of French.
 
+    /**
+     * Performs same action is onActionLogIn() method, however allows for the ENTER key to execute method.
+     * This method was implemented for no other reason than me, the developer being tired of having to use
+     * the mouse to log in while testing my application :-)
+     * @param keyEvent - "ENTER" key
+     */
     public void ENTER(KeyEvent keyEvent) {
         if (keyEvent.getCode().toString().equals("ENTER")) {
 
@@ -126,7 +138,7 @@ public class LoginScreenController implements Initializable
 
                     //JOptionPane.showMessageDialog(null,"Welcome!");
                     try {
-                        UserLog.sucessfulLoginActivity(userNameTextBox.getText());
+                        UserLog.successfulLoginActivity(userNameTextBox.getText());
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
                         Parent root = loader.load();
                         stage = (Stage) ((Node) keyEvent.getSource()).getScene().getWindow();
@@ -157,8 +169,11 @@ public class LoginScreenController implements Initializable
             }
         }
     }
-    public void setRB () {
 
+    /**
+     * Sets resource bundle for language translation, in french, on login screen
+     */
+    public void setRB () {
 
         if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
             userNameLbl.setText(rb.getString("userNameLbl"));
@@ -168,7 +183,11 @@ public class LoginScreenController implements Initializable
 
     }
 
-
+    /**
+     * Loads resource bundle, displays ZoneId of the system default
+     * @param url - "LoginScreen.fxml"
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

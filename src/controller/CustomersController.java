@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -53,8 +52,13 @@ public class CustomersController implements Initializable {
     Stage stage;
 
 
-
-
+    /**
+     * Sets selection of regions in regionComboBox based on first level divisions.
+     * When a country selection is made, the regionComboBox is enabled and selections are populated
+     * based on selected country.
+     * @param actionEvent - countryComboBox selection
+     * @throws SQLException via populateSortedFirstLevelDivs();
+     */
     public void onActionSetCountry(ActionEvent actionEvent) throws SQLException {
 
         if (countryComboBox.getValue() != null) {
@@ -62,26 +66,23 @@ public class CustomersController implements Initializable {
                 FirstLevelDivQuery.getSortedFirstLevelDivs().removeAll(populateSortedFirstLevelDivs
                         (countryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
 
-                FirstLevelDivQuery.getSortedFirstLevelDivs().removeAll(populateSortedFirstLevelDivs
-                        (countryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
-
                 populateSortedFirstLevelDivs(countryComboBox.getSelectionModel().getSelectedItem().getCountryID());
                 getSortedFirstLevelDivs();
-                System.out.println(getSortedFirstLevelDivs());
                 regionComboBox.setItems(FirstLevelDivQuery.getSortedFirstLevelDivs());
                 regionComboBox.setDisable(false);
             } catch (NullPointerException e) {
                 throw new NullPointerException("Country Combo Is Null; Please Make A Selection");
-
             }
-
-
         }
     }
 
-    public void onActionSetRegion(ActionEvent actionEvent) throws SQLException {
-
-    }
+    /**
+     * Checks for null/ empty text fields, and combo boxes.
+     * if all fields are completed, uses DAO.CustomersQuery.updateCustomer() method to update a customer
+     * with the same customer ID. Customer ID is automatically populated when a customer is selected.
+     * @param actionEvent - "Modify Customer" button click
+     * @throws SQLException
+     */
     public void onActionModifyCus(ActionEvent actionEvent) throws SQLException {
         if(cusIDTxtField.getText() != null && cusAddressTxtField.getText() != null && cusPostalCodeTxtField.getText() != null && cusPhoneTxtField.getText() != null && regionComboBox.getSelectionModel().getSelectedItem() != null){
 
@@ -106,6 +107,12 @@ public class CustomersController implements Initializable {
         refreshCustomerTable();
     }
 
+    /**
+     * When actionEvent activated(add customer button click), checks all fields for completeness, then adds the new customer by passing text field values
+     * into DAO.CustomersQuery.insertCustomer() method. Customer ID is auto generated.
+     * @param actionEvent - "Add Customer" button click
+     * @throws SQLException via insertCustomer() method
+     */
     public void onActionAddCus(ActionEvent actionEvent) throws SQLException {
 
         if(cusNameTxtField.getText() != null && cusAddressTxtField.getText() != null && cusPostalCodeTxtField.getText() !=  null
@@ -130,8 +137,12 @@ public class CustomersController implements Initializable {
         refreshCustomerTable();
     }
 
+    /**
+     * Populates text fields based on a customer selection. If fields all fields are complete, passes text field values into DAO deleteCustomer() method.
+     * @param actionEvent - "Delete Customer" button click
+     * @throws SQLException via deleteCustomerAppointments() method
+     */
     public void onActionDeleteCus(ActionEvent actionEvent) throws SQLException {
-
         if(cusIdCol.cellFactoryProperty().getValue() == null || cusNameCol.cellFactoryProperty().getValue() == null || cusIDTxtField.getText() == null || cusNameTxtField.getText() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR,"You must first select a customer from the table to delete!");
             alert.showAndWait();
@@ -153,6 +164,11 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * "Navigates back to schedule display". Loads displaySchedule.fxml, creates a new using Parent, and displays previous screen.
+     * @param actionEvent - "Back" button click
+     * @throws IOException loader.load() throws IOException
+     */
     public void onActionNavigateBack(ActionEvent actionEvent) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/displaySchedule.fxml"));
@@ -163,10 +179,17 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
+    /**
+     * On actionEvent (clear form button), executes clearForm() method.
+     * @param actionEvent - "Clear Form" button click
+     */
     public void onActionClearForm(ActionEvent actionEvent) {
         clearForm();
     }
 
+    /**
+     * Clears observable list and reloads with updated information, then refreshes tableview.
+     */
     public void refreshCustomerTable(){
         try {
 
@@ -190,6 +213,15 @@ public class CustomersController implements Initializable {
         customerTableView.refresh();
     }
 
+    /**
+     * Lambda Expression 1
+     * Calls addListener on selected customer observable value and passes a lambda as an argument.
+     * The lambda expression takes 3 parameters: observableValue, oldValue, and newValue: the observableValue(selection) triggers
+     * event, oldValue is the old value of the selected item, and newValue is the new value. If values are not null, text fields
+     * are set to the newValue.
+     * This lambda expression improved this code by eliminating the need to create a separate listener class allowed implementation
+     * of code directly within the CustomersController class rather than in the newly created listener class.
+     */
     public void getCustomerSelection(){
 
         customerTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -216,11 +248,25 @@ public class CustomersController implements Initializable {
         });
     }
 
+    /**
+     *
+     * @param actionEvent regionComboBox. Currently, has no action. Possible use in future builds.
+     */
+    public void onActionSetRegion(ActionEvent actionEvent) {
+    }
+    /**
+     * Queries database using populateCountries() method and populates countryComboBox with returned values.
+     * @throws SQLException via populateCountries() method
+     */
     public void setCountryCombo() throws SQLException {
         //populate country combo box with query select* from countries.
         CountriesQuery.populateCountries();
         countryComboBox.setItems(CountriesQuery.getAllCountries());
     }
+
+    /**
+     * Sets all text fields to null, and clears all combo box selections. Essentially clearing the form.
+     */
     public void clearForm(){
         cusIDTxtField.setText(null);
         cusNameTxtField.setText(null);
@@ -236,26 +282,52 @@ public class CustomersController implements Initializable {
         refreshCustomerTable();
     }
 
+    /**
+     * Displays use instructions when a user hovers over "Clear Form" button.
+     * @param mouseEvent - "Clear Form" button hover
+     */
     public void onMouseEnterClearForm(MouseEvent mouseEvent) {
         instructionTxt.setText("Clear form to enter new customer information.");
     }
 
+    /**
+     * Displays use instructions when a user hovers over "Add Customer" button
+     * @param mouseEvent - "Add Customer" button hover
+     */
     public void onMouseEnterAddCus(MouseEvent mouseEvent) {
         instructionTxt.setText("To add a new customer, complete all fields and click 'Add Customer'.");
     }
 
+    /**
+     * Displays use instructions when a user hovers over "Modify Customer" button
+     * @param mouseEvent - "Modify Customer" button hover
+     */
     public void onMouseEnterModCus(MouseEvent mouseEvent) {
         instructionTxt.setText("Select a record form the table to modify. Once changes made, click 'Modify Customer'.");
     }
 
+    /**
+     * Displays use instructions when a user hovers over "Delete Customer" button
+     * @param mouseEvent - "Delete Customer" button hover
+     */
     public void onMouseEnterDeleteCus(MouseEvent mouseEvent) {
         instructionTxt.setText("Select a record to delete and click 'Delete Customer'.");
     }
 
+    /**
+     * Displays use instructions when a user hovers over "Back" button
+     * @param mouseEvent - "Back" button hover
+     */
     public void onMouseEnterBack(MouseEvent mouseEvent) {
         instructionTxt.setText("Navigates back to appointments");
     }
 
+    /**
+     * Disables customer id, and cusDivId text fields. Then, populates customer table, executes getCustomerSelection()
+     * method, populates combo boxes, and clears all modifiable fields.
+     * @param url - customers.fxml
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cusIDTxtField.setDisable(true);
@@ -270,5 +342,4 @@ public class CustomersController implements Initializable {
         }
         clearForm();
     }
-
 }

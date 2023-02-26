@@ -26,6 +26,9 @@ import java.util.ResourceBundle;
 import static DAO.ReportsQuery.contactAppointments;
 import static DAO.ReportsQuery.getContactAppointments;
 
+/**
+ * ReportsController Class
+ */
 public class ReportsController implements Initializable {
     Stage stage;
     @FXML
@@ -63,6 +66,11 @@ public class ReportsController implements Initializable {
     @FXML
     public Button reportOneBtn;
 
+    /**
+     * Navigates back to main screen/ displaySchedule.fxml
+     * @param actionEvent "Back" button click
+     * @throws IOException via loader.load()
+     */
     @FXML
     public void onActionNavigateBack(ActionEvent actionEvent) throws IOException {
 
@@ -75,14 +83,32 @@ public class ReportsController implements Initializable {
         stage.show();
 
     }
+
+    /**
+     * Generates report 3 requirement, which counts all users in the database
+     * @param actionEvent - "Generate Report" button click
+     * @throws SQLException via userCount() db query
+     */
     @FXML
     public void onActionReportThree(ActionEvent actionEvent) throws SQLException {
         userCountReportTxt.setText(String.valueOf(DAO.UserQuery.userCount()) + " available users!");
     }
+
+    /**
+     * Calls generateAppointmentCount() method, which generates report one requirement of counting customer appointments
+     * for a given type and a given month.
+     * @param actionEvent
+     * @throws SQLException
+     */
     @FXML
     public void onActionReportOne(ActionEvent actionEvent) throws SQLException {
         generateAppointmentCount();
     }
+
+    /**
+     * Queries database for a count of customer appointments by type and month
+     * @throws SQLException via countAppointments() db query
+     */
     public void generateAppointmentCount() throws SQLException {
         if (aptMonthCombo.getSelectionModel().getSelectedItem() != null && aptTypeCombo.getSelectionModel().getSelectedItem() != null) {
             String monthName = aptMonthCombo.getSelectionModel().getSelectedItem().toString();
@@ -93,6 +119,12 @@ public class ReportsController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    /**
+     * Displays a schedule for the selected contact.
+     * @param actionEvent "contactCombo" selection
+     * @throws SQLException
+     */
     @FXML
     public void onActionViewSchedule(ActionEvent actionEvent) throws SQLException {
         DAO.ReportsQuery.getContactAppointments().clear();
@@ -111,6 +143,10 @@ public class ReportsController implements Initializable {
         aptcusIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
     }
+
+    /**
+     * Adds available appointment types to a list and populates aptTypeCombo combo box.
+     */
     public void setAptTypeCombo(){
         ObservableList<String> appointmentsList = FXCollections.observableArrayList();
         String aptString;
@@ -125,6 +161,9 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * Adds month selections to an ObservableList of strings. Uses the list to populate month combo box
+     */
     public void setMonthCombo(){
 
         ObservableList<String> aptMonthList = FXCollections.observableArrayList();
@@ -141,20 +180,26 @@ public class ReportsController implements Initializable {
         aptMonthList.add("October");
         aptMonthList.add("November");
         aptMonthList.add("December");
-
         aptMonthCombo.setItems(aptMonthList);
     }
+
+    /**
+     * populates contactCombo combo box with allContacts ObservableList
+     */
     public void setContactCombo(){
         contactCombo.setItems(DAO.ContactsQuery.getAllContacts());
     }
 
+    /**
+     * Sets all combo boxes
+     * @param url - "reports.fxml"
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setAptTypeCombo();
         setMonthCombo();
         setContactCombo();
-
-
     }
 
 }

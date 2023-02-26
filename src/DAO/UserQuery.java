@@ -7,10 +7,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * UserQuery Class
+ */
 public class UserQuery {
 
     public static ObservableList<User> allUsers = FXCollections.observableArrayList();
 
+    /**
+     * Queries database for users and adds results to an ObservableList
+     * @return allUsers
+     * @throws SQLException via database query
+     */
     public static ObservableList<User> populateUsers() throws SQLException {
         if (allUsers.size() == 0){
             String sql = "SELECT * FROM users";
@@ -25,6 +33,12 @@ public class UserQuery {
         }
         return allUsers;
     }
+
+    /**
+     * Counts users in database
+     * @return integer count
+     * @throws SQLException via db query
+     */
     public static int userCount() throws SQLException {
         int count = 0;
         String sql = "SELECT count(User_Name) FROM users";
@@ -35,26 +49,13 @@ public class UserQuery {
         }
         return count;
     }
-    public static int insertUser(String User_Name, String Password) throws SQLException {
-        String sql = "INSERT INTO users (User_Name,Password) VALUES(?,?)";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1,User_Name);
-        ps.setString(2,Password);
-        int rowsAffected = ps.executeUpdate();
-        if(rowsAffected > 0){
-            System.out.println("Insert Sucessful!");
-        }else System.out.println("Insert Failed!");
-        return rowsAffected;
-    }
 
-    public static void selectUser(String User_Name, int User_ID) throws SQLException {
-        String sql = "SELECT * FROM users WHERE User_Name = ? AND User_ID = ?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1,User_Name);
-        ps.setInt(2,User_ID);
-
-    }
-
+    /**
+     * Queries database for users with a user id matching the passed User_ID variable
+     * @param User_ID int variable representing User_ID column in database
+     * @return returns found user
+     * @throws SQLException via db Query
+     */
     public static User getUser(int User_ID) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -69,27 +70,4 @@ public class UserQuery {
         return null;
     }
 
-
-    public static int updateUserName(String User_Name, int User_ID) throws SQLException {
-        String sql = "UPDATE users SET User_Name = ? WHERE User_ID = ?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1,User_Name);
-        ps.setInt(2,User_ID);
-        int rowsAffected = ps.executeUpdate();
-        if(rowsAffected > 0){
-            System.out.println("Update Successful!");
-        }else System.out.println("Update Failed!");
-        return rowsAffected;
-    }
-    public static int deleteUser(String User_Name, int User_ID) throws SQLException {
-        String sql = "DELETE FROM users WHERE User_Name = ? AND User_ID = ?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1,User_Name);
-        ps.setInt(2,User_ID);
-        int rowsAffected = ps.executeUpdate();
-        if(rowsAffected > 0){
-            System.out.println("Delete Successful!");
-        }else System.out.println("Delete Failed!");
-        return rowsAffected;
-    }
 }

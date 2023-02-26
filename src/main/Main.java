@@ -12,6 +12,11 @@ import static DAO.DBConnection.*;
 
 public class Main extends Application {
 
+    /**
+     * Loads login screen
+     * @param primaryStage sets stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception
     {
@@ -21,6 +26,12 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 500, 350));
         primaryStage.show();
     }
+
+    /**
+     * Main method, establishes a database connection and closes connection with exit.
+     * @param args
+     * @throws SQLException via dbConnect() and closeConnection() methods
+     */
     public static void main(String[] args) throws SQLException {
         //Locale.setDefault(new Locale("fr","CA"));      // Sets default to french to test log-in form
 

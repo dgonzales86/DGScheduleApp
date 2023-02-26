@@ -210,7 +210,7 @@
                   <Insets right="30.0" />
                </HBox.margin>
          </RadioButton>
-         <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" onMouseEntered="#aptByWeekOnMouseEnter" prefHeight="39.0" prefWidth="162.0" text="View Appoints by Week" toggleGroup="$sortDate">
+         <RadioButton fx:id="apptsByWeekRadioBtn" mnemonicParsing="false" onAction="#onActionViewApptsByWeek" onMouseEntered="#aptByWeekOnMouseEnter" prefHeight="39.0" prefWidth="183.0" text="View Appointments by Week" toggleGroup="$sortDate">
             <padding>
                <Insets top="20.0" />
             </padding>

@@ -20,7 +20,9 @@ public class DBConnection {
     private static final String userPassword = "test";
     public static Connection connection;
 
-
+    /**
+     * Opens a database connection
+     */
     public static void dbConnect(){
         try{
 
@@ -34,10 +36,18 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Getter for DB connection, returns connection
+     * @return connection
+     */
     public static Connection getConnection(){
         return connection;
     }
 
+    /**
+     * Closes DB connection.
+     * Executed from main upon close of program.
+     */
     public static void closeConnection(){
         try {
             connection.close();

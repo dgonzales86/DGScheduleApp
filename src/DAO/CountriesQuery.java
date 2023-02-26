@@ -9,9 +9,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * CountriesQuery Class
+ */
 public class CountriesQuery {
     private static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
     private static ObservableList<Countries> sortedCountries = FXCollections.observableArrayList();
+
+    /**
+     * Queries database for all countries
+     * Adds countries to ObservableList allCountries
+     * @return allCountries
+     * @throws SQLException via database query
+     */
     public static ObservableList<Countries> populateCountries() throws SQLException {
         if(allCountries.size()==0) {
             String sql = "SELECT * FROM Countries";
@@ -27,26 +37,21 @@ public class CountriesQuery {
         }
         return allCountries;
     }
+
+    /**
+     * Getter for ObservableList allCountries
+     * @return allCountries
+     */
     public static ObservableList<Countries>getAllCountries(){
         return allCountries;
     }
-    public static ObservableList<Countries>populateSortedCountries(int countryID) throws SQLException {
-        String sql = "SELECT * FROM Countries WHERE Country_ID =?";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setInt(1,countryID);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            int countID = rs.getInt("Country_ID");
-            String country = rs.getString("Country");
-            sortedCountries.add(new Countries(countID,country));
-        }
-        return sortedCountries;
-    }
 
-    public static ObservableList<Countries> getSortedCountries(){
-        return sortedCountries;
-    }
-
+    /**
+     * Queries database for countries that have a Country_ID matching the passed divID variable
+     * @param divID int variable representing division id
+     * @return if a match found, returns countries, else returns null
+     * @throws SQLException via database query
+     */
     public static Countries getCountryByDiv(int divID) throws SQLException {
 
         FirstLevelDiv div = FirstLevelDivQuery.getDivision(divID);

@@ -8,9 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * ReportsQuery Class
+ */
 public class ReportsQuery {
     public static ObservableList<model.Appointments> contactAppointments = FXCollections.observableArrayList();
 
+    /**
+     * Queries appointments for appointments that have a matching contact id with the contact id of the contacts' table
+     * if a match is found, they are added to an ObservableList.
+     * @param contName
+     * @throws SQLException
+     */
     public static void querySchedule(String contName) throws SQLException {
 
         String sql = "select contacts.Contact_Name, contacts.Email, appointments.Contact_ID, appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description," +
@@ -36,6 +45,11 @@ public class ReportsQuery {
 
         }
     }
+
+    /**
+     * Getter for contactAppointments ObservableList
+     * @return contactAppointments
+     */
     public static ObservableList<Appointments> getContactAppointments() {
         return contactAppointments;
     }
