@@ -768,7 +768,7 @@ public class DisplayScheduleController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"There are no existing appointments!");
         }else {
             for (Appointments appointments: AppointmentsQuery.getAllAppointments()){
-                if(appointments.getStart().getMonth() == LocalDateTime.now().getMonth()){
+                if(appointments.getStart().getMonth() == LocalDateTime.now().getMonth() && appointments.getStart().getYear() == LocalDateTime.now().getYear()){
 
                     filteredAppointmentsByMonth.add(appointments);
 
