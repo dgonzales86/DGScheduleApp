@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * CheckForOverlapApt Interface
+ * Used to implement lambda function for time overlap checking
  */
 public interface CheckForOverlapApt {
     /**

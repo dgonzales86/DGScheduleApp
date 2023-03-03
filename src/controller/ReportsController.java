@@ -28,9 +28,11 @@ import static DAO.ReportsQuery.getContactAppointments;
 
 /**
  * ReportsController Class
+ * Implements methods to generate required reports
  */
 public class ReportsController implements Initializable {
     Stage stage;
+
     @FXML
     public TableColumn aptcusIdColumn;
     @FXML
@@ -97,7 +99,7 @@ public class ReportsController implements Initializable {
     /**
      * Calls generateAppointmentCount() method, which generates report one requirement of counting customer appointments
      * for a given type and a given month.
-     * @param actionEvent
+     * @param actionEvent "Generate Report" button click
      * @throws SQLException
      */
     @FXML
@@ -123,7 +125,7 @@ public class ReportsController implements Initializable {
     /**
      * Displays a schedule for the selected contact.
      * @param actionEvent "contactCombo" selection
-     * @throws SQLException
+     * @throws SQLException via getContactAppointments() method's DB query
      */
     @FXML
     public void onActionViewSchedule(ActionEvent actionEvent) throws SQLException {
@@ -193,7 +195,7 @@ public class ReportsController implements Initializable {
     /**
      * Sets all combo boxes
      * @param url - "reports.fxml"
-     * @param resourceBundle
+     * @param resourceBundle for ResourceBundle utilization
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

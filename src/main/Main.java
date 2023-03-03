@@ -9,13 +9,15 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import static DAO.DBConnection.*;
 
-
+/**
+ * Main Class
+ */
 public class Main extends Application {
 
     /**
      * Loads login screen
      * @param primaryStage sets stage
-     * @throws Exception
+     * @throws Exception thrown by getClass().getResource();
      */
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -29,7 +31,7 @@ public class Main extends Application {
 
     /**
      * Main method, establishes a database connection and closes connection with exit.
-     * @param args
+     * @param args main arguments
      * @throws SQLException via dbConnect() and closeConnection() methods
      */
     public static void main(String[] args) throws SQLException {

@@ -2,10 +2,20 @@ package model;
 
 /**
  * FirstLevelDiv Class
+ * shell used to create and retrieve FirstLevelDiv objects
  */
 public class FirstLevelDiv {
+    /**
+     * division ID of FirstLevelDiv object
+     */
     private int divisionID;
+    /**
+     * division of FirstLevelDiv object
+     */
     private String division;
+    /**
+     * country ID of FirstLevelDiv object
+     */
     private int countryID;
 
     /**

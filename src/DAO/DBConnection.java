@@ -16,8 +16,8 @@ public class DBConnection {
     public static final String location = "//localhost/";
     private static final String databaseName = "client_schedule";
     private static final String db_URL = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; //LOCAL
-    private static final String userName = "test";
-    private static final String userPassword = "test";
+    private static final String userName = "sqlUser";
+    private static final String userPassword = "Passw0rd!";
     public static Connection connection;
 
     /**

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * CustomersQuery Class
+ * Implements methods that query the database for customers related operations.
  */
 public class CustomersQuery {
     private static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();

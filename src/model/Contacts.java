@@ -2,10 +2,20 @@ package model;
 
 /**
  * Contacts Class
+ * provides shell to create and retrieve Contacts objects
  */
 public class Contacts {
+    /**
+     * contact id of Contacts Objects
+     */
     private int contactID;
+    /**
+     * contact name of Contacts Objects
+     */
     private String contactName;
+    /**
+     * contact email address of Contacts Objects
+     */
     private String contactEmail;
 
     /**

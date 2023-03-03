@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 /**
  * LoginScreenController Class
+ * Implements methods related to logging into the system
  */
 public class LoginScreenController implements Initializable
 {
@@ -65,8 +66,6 @@ public class LoginScreenController implements Initializable
 
             String userName = String.valueOf(userNameTextBox.getText());
             String userPassword = String.valueOf(userPasswordTextBox.getText());
-
-            System.out.println(userName + userPassword);
 
             // Raw SQL
             String sql = "select * from users where User_Name='"+ userName +"' and Password='"+ userPassword +"'";
@@ -186,7 +185,7 @@ public class LoginScreenController implements Initializable
     /**
      * Loads resource bundle, displays ZoneId of the system default
      * @param url - "LoginScreen.fxml"
-     * @param rb
+     * @param rb - used for ResourceBundle utilization
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

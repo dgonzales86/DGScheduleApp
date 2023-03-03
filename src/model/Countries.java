@@ -2,10 +2,17 @@ package model;
 
 /**
  * Countries Class
+ * provides the shell to create and retrieve Countries objects
  */
 public class Countries {
 
+    /**
+     * country id of Countries Object
+     */
     private int countryID;
+    /**
+     * country of Countries Object
+     */
     private String country;
 
     /**

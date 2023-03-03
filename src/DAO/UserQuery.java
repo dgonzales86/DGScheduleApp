@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 /**
  * UserQuery Class
+ * Implements methods to query the database for user related operations
  */
 public class UserQuery {
 

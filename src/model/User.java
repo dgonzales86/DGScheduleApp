@@ -2,10 +2,20 @@ package model;
 
 /**
  * User Class
+ * shell used to create and retrieve User objects
  */
 public class User {
+    /**
+     * user id of User Object
+     */
     private int userID;
+    /**
+     * username of User object
+     */
     private String userName;
+    /**
+     * user password of User object
+     */
     private String userPasswd;
 
     /**

@@ -4,17 +4,48 @@ import java.time.LocalDateTime;
 
 /**
  *  Appointments class
+ *  provides shell to create and retrieve Appointments objects
  */
 public class Appointments{
+    /**
+     * appointment id of Appointments Objects
+     */
     private int appointmentID;
+    /**
+     * appointment title of Appointments Objects
+     */
     private String appointmentTitle;
+    /**
+     * appointment description of Appointments Objects
+     */
     private String appointmentDesc;
+    /**
+     * appointment location of Appointments Objects
+     */
     private String appointmentLocation;
+    /**
+     * appointment type of Appointments Objects
+     */
     private String appointmentType;
+    /**
+     * appointment start time of Appointments Objects
+     */
     private LocalDateTime start;
+    /**
+     * appointment end time of Appointments Objects
+     */
     private LocalDateTime end;
+    /**
+     * appointment customer id of Appointments Objects
+     */
     private int customerID;
+    /**
+     * appointment user id of Appointments Objects
+     */
     private int userID;
+    /**
+     * appointment contact id of Appointments Objects
+     */
     private int contactID;
 
     /**

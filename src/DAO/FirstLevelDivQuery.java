@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 /**
  * FirstLevelDivQuery Class
+ * Implements methods to query database for first level division operations.
  */
 public class FirstLevelDivQuery {
     private static ObservableList<FirstLevelDiv> allFirstLevelDivs = FXCollections.observableArrayList();

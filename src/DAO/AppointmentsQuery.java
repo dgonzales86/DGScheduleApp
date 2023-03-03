@@ -13,9 +13,13 @@ import java.time.LocalDateTime;
 
 /**
  * AppointmentsQuery Class
+ * Implements methods to query database
  */
 public class AppointmentsQuery {
 
+    /**
+     * Observable array list to store all appointments retrieved from database
+     */
     private static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
     /**
@@ -51,7 +55,7 @@ public class AppointmentsQuery {
 
     /**
      * Getter for allAppointments ObservableList
-     * @return
+     * @return allAppointments
      */
     public static ObservableList<Appointments> getAllAppointments(){
         return allAppointments;

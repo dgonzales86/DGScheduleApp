@@ -10,15 +10,19 @@ import java.time.LocalDateTime;
 
 /**
  * ReportsQuery Class
+ * Implements methods used to generate reports in reports controller GUI
  */
 public class ReportsQuery {
+    /**
+     * Observable array list to store contactAppointments retrieved fromn database
+     */
     public static ObservableList<model.Appointments> contactAppointments = FXCollections.observableArrayList();
 
     /**
      * Queries appointments for appointments that have a matching contact id with the contact id of the contacts' table
      * if a match is found, they are added to an ObservableList.
-     * @param contName
-     * @throws SQLException
+     * @param contName String variable contName used to pass in database query as Contact_ID column
+     * @throws SQLException via DB SELECT query
      */
     public static void querySchedule(String contName) throws SQLException {
 

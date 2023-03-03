@@ -2,14 +2,36 @@ package model;
 
 /**
  * Customers Class
+ * shell used to create and retrieve Customers objects
  */
 public class Customers {
+    /**
+     * customer id of Customers Objects
+     */
     private int customerID;
+    /**
+     * customer name of Customers Objects
+     */
     private String customerName;
+    /**
+     * customer address of Customers Objects
+     */
     private String customerAddress;
+    /**
+     * customer postal code of Customers Objects
+     */
     private String customerPostalCode;
+    /**
+     * customer phone number of Customers Objects
+     */
     private String customerPhone;
+    /**
+     * customer division id of Customers Objects
+     */
     private int customerDivID;
+    /**
+     * customer division of Customers Objects
+     */
     private String customerDiv;
 
     /**

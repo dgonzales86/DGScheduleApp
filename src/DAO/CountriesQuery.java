@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 /**
  * CountriesQuery Class
+ * Implements methods that query the database for countries related functions.
  */
 public class CountriesQuery {
     private static ObservableList<Countries> allCountries = FXCollections.observableArrayList();

@@ -23,30 +23,106 @@ import java.util.ResourceBundle;
 import static DAO.CustomersQuery.*;
 import static DAO.FirstLevelDivQuery.*;
 
-
+/**
+ * CustomerController Class
+ * implements methods to give GUI functionality
+ */
 public class CustomersController implements Initializable {
 
+    /**
+     * tableview used to display customers
+     */
     public TableView<model.Customers> customerTableView;
+    /**
+     * combo-box used to select country
+     */
     public ComboBox<model.Countries> countryComboBox;
+    /**
+     * combo box used to select a region
+     */
     public ComboBox<model.FirstLevelDiv> regionComboBox;
+    /**
+     * used to display customer ID
+     * non-editable text field
+     */
     public TextField cusIDTxtField;
+    /**
+     * used to enter customer name
+     */
     public TextField cusNameTxtField;
+    /**
+     * used to enter customer address
+     */
     public TextField cusAddressTxtField;
+    /**
+     * used to enter customer postal code
+     */
     public TextField cusPostalCodeTxtField;
+    /**
+     * used to enter customer phone number
+     */
     public TextField cusPhoneTxtField;
+    /**
+     * used to display customer division id
+     * non-editable text field
+     */
     public TextField cusDivIdTxtField;
+    /**
+     * button used to add customer
+     * onAction method currently utilized
+     */
     public Button addCustomerBtn;
+    /**
+     * modify customer button
+     * onAction method currently utilized
+     */
     public Button modifyCusBtn;
+    /**
+     * Tableview column: used to display customer id in tableview
+     */
     public TableColumn cusIdCol;
+    /**
+     * Tableview column: used to display customer name in tableview
+     */
     public TableColumn cusNameCol;
+    /**
+     * Tableview column: used to display customer address
+     */
     public TableColumn cusAddressCol;
+    /**
+     * Tableview column: used to display customer postal code
+     */
     public TableColumn cusPostalCodeCol;
+    /**
+     * Tableview column: used to display customer phone
+     */
     public TableColumn cusPhoneCol;
+    /**
+     * Tableview column: used to display customer division id
+     */
     public TableColumn cusDivIdCol;
+    /**
+     * delete customer button
+     * onAction method utilized
+     */
     public Button deleteCusBtn;
+    /**
+     * navigate back button
+     * onAction method used to navigate to previous screen
+     */
     public Button navigateBackBtn;
+    /**
+     * clear form button
+     * onAction method currently utilized
+     */
     public Button clearFormBtn;
+    /**
+     * Tableview column: used to display customer division id
+     */
     public TableColumn cusDivCol;
+    /**
+     * text that is set to give instructions on use for various buttons
+     */
     public Text instructionTxt;
 
     Stage stage;
@@ -326,7 +402,7 @@ public class CustomersController implements Initializable {
      * Disables customer id, and cusDivId text fields. Then, populates customer table, executes getCustomerSelection()
      * method, populates combo boxes, and clears all modifiable fields.
      * @param url - customers.fxml
-     * @param resourceBundle
+     * @param resourceBundle used for ResourceBundle utilization
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

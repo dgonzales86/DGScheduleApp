@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DGScheduleApp.iml" filepath="$PROJECT_DIR$/DGScheduleApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UniversalSchedulingApp.iml" filepath="$PROJECT_DIR$/UniversalSchedulingApp.iml" />
     </modules>
   </component>
 </project>

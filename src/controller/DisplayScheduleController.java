@@ -23,7 +23,6 @@ import model.Contacts;
 import model.Customers;
 import model.User;
 import util.CheckForOverlapApt;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,84 +36,222 @@ import static DAO.AppointmentsQuery.getAllAppointments;
 
 
 /**
- *
+ * DisplayScheduleController
+ * Implements methods to control functions within the GUI
+ * Implements majority of features
  */
 public class DisplayScheduleController implements Initializable {
-
-    public ToggleGroup sortDate;
-    public RadioButton allAppointments;
-    public Text buttonHelperTxt;
-    public Text addModifyAptHelperTxt;
     Stage stage;
+    /**
+     * Toggle group for appointment filter
+     */
+    @FXML
+    public ToggleGroup sortDate;
+    /**
+     * toggle button to view all appointments
+     */
+    @FXML
+    public RadioButton allAppointments;
+    /**
+     * text to provide use instructions
+     */
+    @FXML
+    public Text buttonHelperTxt;
+    /**
+     * text to provide use instructions
+     */
+    @FXML
+    public Text addModifyAptHelperTxt;
+    /**
+     * Customers comboBox to select a customer
+     */
     @FXML
     public ComboBox <Customers> customerCombo;
+    /**
+     * user combo box to select a user
+     */
     @FXML
     public ComboBox <User> userCombo;
+    /**
+     * contact combo box to select a contact
+      */
     @FXML
-
     public ComboBox <Contacts> contactComboBox;
+    /**
+     * delete appointment button to delete an appointment
+     */
     @FXML
     public Button deleteAptBtn;
+    /**
+     * clear form button clears form to add a new appointment
+     */
     @FXML
     public Button clearFormBtn;
+    /**
+     * modify appointment button to submit modifications to appointment
+     */
     @FXML
     public Button modifyAptBtn;
+    /**
+     * LocalDate variable to store a LocalDate
+     */
 
     private LocalDate localDate;
 
+    /**
+     * Stores a start time
+     */
     private LocalTime startTime;
+    /**
+     * stores an end time
+     */
     private LocalTime endTime;
+    /**
+     * stores appointment start time
+     */
     private LocalDateTime appointmentStart;
+    /**
+     * stores appointment end time
+     */
     private LocalDateTime appointmentEnd;
+    /**
+     * used as appointment id label
+     */
     @FXML
     public TextField aptIdTxtField;
+    /**
+     * submit chages button to modify appointments.
+     * currently unused outside fxml file
+     */
     @FXML
     public Button submitChangeBtn;
-
+    /**
+     * Appointment title text field
+     * used to enter appointment title
+     */
     @FXML
     public TextField aptTitleTxtField;
+    /**
+     * appointment description text field
+     * used for entering appointment description
+     */
     @FXML
     public TextField aptDescTxtField;
+    /**
+     * appointment location text-field
+     * used to enter appointment location
+     */
     @FXML
     public TextField aptLocationTxtField;
+    /**
+     * appointment type text field
+     * used for entering appointment type
+     */
     @FXML
     public TextField aptTypeTxtField;
+    /**
+     * appointment date picker
+     * used to select a date for an appointment
+     */
     @FXML
     public DatePicker startDatePicker;
+    /**
+     * reports button
+     * navigates to reports screen
+     * currently implemented by onAction method
+     */
     @FXML
     public Button reportsBtn;
+    /**
+     * start time combo box
+     * used to select appointment start time
+     */
     @FXML
     public ComboBox startTimeCombo;
+    /**
+     * end time combo box
+     * used to select appointment end time
+     */
     @FXML
     public ComboBox endTimeCombo;
+    /**
+     * used to filter appointment by month
+     * onAction method used
+     */
     @FXML
     public RadioButton apptByMonthRadioBtn;
+    /**
+     * used to filter appointment by month
+     * onAction method used
+     */
     @FXML
     public RadioButton apptsByWeekRadioBtn;
+    /**
+     * Tableview column: for displaying contact id
+     */
     @FXML
     private TableColumn<?, ?> appointmentContactCol;
+    /**
+     * Tableview column: for displaying customer id
+     */
     @FXML
     private TableColumn<?, ?> appointmentCustomerCol;
+    /**
+     * Tableview column: used for displaying appointment description
+     */
     @FXML
     private TableColumn<?, ?> appointmentDescriptionCol;
+    /**
+     * Tableview column: used to display appointment end date/time
+     */
     @FXML
     private TableColumn<?, ?> appointmentEndCol;
+    /**
+     * Tableview column: used to display appointment id
+     */
     @FXML
     private TableColumn<?, ?> appointmentIDCol;
+    /**
+     * Tableview column: used to display appointment location information
+     */
     @FXML
     private TableColumn<?, ?> appointmentLocationCol;
+    /**
+     * Tableview column: displays appointment start date/time
+     */
     @FXML
     private TableColumn<?, ?> appointmentStartCol;
+    /**
+     * Tableview used to display all appointments
+     */
     @FXML
     private TableView<Appointments> appointmentTableView;
+    /**
+     * Tableview column: used to display appointment title information
+     */
     @FXML
     private TableColumn<?, ?> appointmentTitleCol;
+    /**
+     * Tableview column: used to display appointment type information
+     */
     @FXML
     private TableColumn<?, ?> appointmentTypeCol;
+    /**
+     * Tableview column: used to display appointment user id
+     */
     @FXML
     private TableColumn<?, ?> appointmentUserCol;
+    /**
+     * customers button
+     * onAction method used to implement method
+     * provides no function
+     */
     @FXML
     private Button customersBtn;
+    /**
+     * currently provides no function
+     * onAction method used
+     */
     @FXML
     private Button exitBtn;
 
@@ -739,20 +876,34 @@ public class DisplayScheduleController implements Initializable {
      * an alert will display indicating such. Otherwise, an alert will display indicating no upcoming appointments.
      */
     public void upcomingApt() {
+
+
         if (DAO.AppointmentsQuery.getAllAppointments().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no upcoming appointments!");
             alert.showAndWait();
         } else {
+            boolean appointmentFound = false;
+            LocalDateTime appointmentStart = LocalDateTime.now();
+            int appointmentID =0;
             for (Appointments appointments : DAO.AppointmentsQuery.getAllAppointments()) {
-                if (appointments.getStart().isAfter(LocalDateTime.now().minusMinutes(1)) && appointments.getStart().isBefore(LocalDateTime.now().plusMinutes(16))) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "There is an upcoming appointment within 15 minutes!");
-                    alert.showAndWait();
-                    break;
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no upcoming appointments!");
-                    alert.showAndWait();
-                    break;
+                System.out.println(appointments.getStart());
+
+                if (appointments.getStart().isAfter(LocalDateTime.now()) && appointments.getStart().isBefore(LocalDateTime.now().plusMinutes(15))) {
+                    appointmentFound = true;
+                    appointmentStart = appointments.getStart();
+                    appointmentID = appointments.getAppointmentID();
+
                 }
+
+            }
+            if (appointmentFound){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Appointment ID: " + appointmentID + ", will begin at " + appointmentStart);
+                alert.setResizable(true);
+                alert.showAndWait();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "There are no upcoming appointments!");
+                alert.showAndWait();
+
             }
         }
     }
@@ -848,7 +999,11 @@ public class DisplayScheduleController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        try {
+            AppointmentsQuery.populateAppointments();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         refreshAppointmentsTable();
         getAppointmentSelection();
         popStartTimeCombo();

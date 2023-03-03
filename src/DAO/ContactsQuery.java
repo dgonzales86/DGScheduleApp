@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * ContactsQuery Class
+ * Implements contacts related methods to query database for contact related functionality
  */
 public class ContactsQuery {
 
@@ -18,9 +19,10 @@ public class ContactsQuery {
 //    COLUMN_CONTACT_NAME = "Contact_Name";
 //    COLUMN_CONTACT_EMAIL = "Email";
 
-
+    /**
+     * Observable array list to store all contacts retrieved from database
+     */
     private static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
-    private static ObservableList<Contacts> sortedContacts = FXCollections.observableArrayList();
 
     /**
      * Queries database for contacts and populates an ObservableList with returned data.
