@@ -10,7 +10,7 @@ language translation to french, and appends login attempts to an external text f
 
 Author and build information
 
-Donald Gonzales, dgon148@wgu.edu, version 1.0, 02/26/2023
+Donald Gonzales, dgonzales1@outlook.com, version 1.0, 02/26/2023
 IntelliJ IDEA 2022.1.1 (Community Edition)
 Java JDK 17.0.5 / openjfx SDK 11.0.2
 MySQL Connector driver version 8.0.29
